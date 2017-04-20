@@ -8,9 +8,10 @@ reg in_transit_ff;
 
 always @(posedge clk, negedge rst_n) begin
 
-	if (!rst_n) 
+	if (!rst_n) begin
 		in_transit <= 0;
-	else 
+		in_transit_ff <= 0;
+	end else 
 		in_transit <= in_transit_ff;
 		
 end
@@ -23,9 +24,10 @@ always @(*) begin
 
 end
 
-localparam IDLE, GO;
+localparam IDLE = 1'b0;
+localparam GO = 1'b1;
 
-wire state, nxt_state;
+reg state, nxt_state;
 
 always @(posedge clk, negedge rst_n) begin
 
@@ -37,34 +39,38 @@ always @(posedge clk, negedge rst_n) begin
 end
 
 always @(*) begin
-	case (state) begin
+	
+	clr_ID_vld = 1'b0;
+	clr_cmd_rdy = 0;
 
-		clr_ID_vld = 0;
-		
-		
+	case (state) 
+
 		IDLE: if (cmd_rdy && cmd[7:6] == 2'b01) begin
 			nxt_state = GO;
 			in_transit_ff = 1;
+			clr_cmd_rdy = 1;
 		end else begin
-			nxt-state = IDLE;
+			nxt_state = IDLE;
 		end		
 		
 		
 		GO: if (cmd_rdy & cmd [7:6] == 2'b00) begin
 			nxt_state = IDLE;
 			in_transit_ff = 0;
+			clr_cmd_rdy = 1;
 		end else if (cmd_rdy == 0 && ID_vld && ID[5:0] == cmd[5:0]) begin
 			clr_ID_vld = 1;
 			in_transit_ff = 0;
-			nxt-state = IDLE;
+			nxt_state = IDLE;
 		end else if (cmd_rdy && cmd[7:6] == 2'b00) begin
 			in_transit_ff = 0;
 			nxt_state = IDLE;
+			clr_cmd_rdy = 1;
 		end else begin
 			nxt_state = GO;
 		end
 
-	end
+	endcase
 end 
 
 endmodule
