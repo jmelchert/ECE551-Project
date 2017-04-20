@@ -1,4 +1,4 @@
-module barcode(clk, rst_n, BC_async,ID_vld, ID, clr_ID_vld);
+module barcode(clk, rst_n, BC_async, ID_vld, ID, clr_ID_vld);
 	
 input BC_async, clr_ID_vld, clk, rst_n;
 output reg ID_vld;

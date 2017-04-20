@@ -6,25 +6,28 @@ input clk, rst_n, go, cnv_cmplt;
 input [11:0] A2D_res;
 
 //outputs
-output start_conv, IR_in_en, IR_mid_en, IR_out_en;
+output reg start_conv, IR_in_en, IR_mid_en, IR_out_en;
 output reg [2:0] chnnl;
 output [7:0] LEDs;
 output [10:0] lft, rht;
 
-//Other registers we will need
+// ALU registers
+reg signed [15:0] dst;
+reg [15:0] Accum, Pcomp;
+reg [13:0] Pterm;
+reg signed [11:0] Error, Intgrl, Icomp;
+reg [11:0] Iterm, Fwd;
+reg [2:0] src0sel, src1sel;
+reg sub, multiply, mult2, mult4, saturate,;
+
+// Registers for motion controller model itself
 reg [4:0] timer32 = 0;
 reg [11:0] timer4096 = 0;
 reg timer32_en = 0, timer4096_en = 0;
 
-// registers needed for the ALU
-reg [15:0] Accum, Pcomp;
-reg signed [15:0] dst;
-reg [13:0] Pterm;
-reg [11:0] Error, Intgrl, Icomp, lft_reg, rht_reg, Fwd, res;
-reg [2:0] src0sel, src1sel;
-reg [2:0] src1sel, src0sel;
-reg sub, multiply, mult2, mult4, saturate, dst2Accum, 
-    dst2Err, dst2Int, dst2Icmp, dst2Pcmp, dst2lft, dst2rht, //other signals we will need
+
+reg [11:0] lft_reg, rht_reg, Fwd, res;
+reg dst2Accum, dst2Err, dst2Int, dst2Icmp, dst2Pcmp, dst2lft, dst2rht, //other signals we will need
 	a2d_SS_n, SCLK, MOSI, MISO;
 	
 reg [2:0] state;
@@ -32,12 +35,14 @@ reg [1:0] int_dec; // - keep the integration from running to fast
                    // - only assert to write back to Intgrl when it == 4
 
 
-alu iALU(.Accum(Accum), .Pcomp(Pcomp), .Pterm(Pterm), .A2D_res(A2D_res), .Error(Error), .Intgrl(Intgrl),
+alu iALU(.Accum(Accum), .Pcomp(Pcomp), .Pterm(Pterm), .Fwd(Fwd), .A2D_res(A2D_res), .Error(Error), .Intgrl(Intgrl),
          .Icomp(Icomp), .Iterm(Iterm), .src1sel(src1sel), .src0sel(src0sel), .multiply(multiply), 
          .sub(sub), .mult2(mult2), .mult4(mult4), .saturate(saturate), .dst(dst));
 
 
 A2D_intf iA2D(.clk(clk), .rst_n(rst_n), .strt_cnv(start_conv), .cnv_cmplt(cnv_cmplt), .chnnl(chnnl), .res(res), .a2d_SS_n(a2d_SS_n), .SCLK(SCLK), .MOSI(MOSI), .MISO(MISO));
+
+
 
 localparam idle = 3'b000;
 localparam PWM_IR_sel = 3'b001;
