@@ -1,16 +1,21 @@
 module cmd_control(clk, rst_n, cmd, cmd_rdy, clr_cmd_rdy, in_transit, OK2Move, go, buzz, buzz_n, ID, ID_vld, clr_ID_vld);
 
-input [7:0] cmd;
-input cmd_rdy, OK2Move, ID_vld, clk, rst_n;
-output reg clr_cmd_rdy, in_transit, go, buzz, clr_ID_vld;
+input [7:0] cmd; // 8 Bit input command
+input [7:0] ID; // ID 8 bit input
+input cmd_rdy, OK2Move, ID_vld, clk, rst_n; // Inputs for clk, rst, and ready signals
+output reg clr_cmd_rdy, in_transit, go, buzz, clr_ID_vld; // Ouputs
 output buzz_n;
-input [7:0] ID;
-reg in_transit_ff, en;
-reg [13:0] buzz_cnt= 0;
 
+// Registers for internal signals
+reg in_transit_ff, en;
+
+// Variables for the buzzer pwm signal
+reg [13:0] buzz_cnt = 0; 
 parameter INIT_VALUE = 14'b0; 
 parameter EXP_VALUE = 14'd12500; // 50MHZ clock divided by 4KHZ signal
 
+
+// Flopping the in_transit signal
 always @(posedge clk, negedge rst_n) begin
 
 	if (!rst_n) begin
@@ -21,6 +26,7 @@ always @(posedge clk, negedge rst_n) begin
 		
 end
 
+// Combinational logic for the go and buzzer signal
 always @(*) begin
 
 	go = in_transit & OK2Move;
@@ -28,7 +34,7 @@ always @(*) begin
 
 end
 
-
+// Buzzer pwm logic
 always @(posedge clk or negedge rst_n) begin
   if (!rst_n) begin
     buzz <= 1'b0; 
@@ -46,16 +52,17 @@ always @(posedge clk or negedge rst_n) begin
         buzz_cnt <= INIT_VALUE;
  end
 
-
+// Assign bzz_n to the inverse of buzz
 assign buzz_n = (en)? ~buzz : buzz; // Inversion only when enabled to vibrate.
 
 
-
+// State machine states
 localparam IDLE = 1'b0;
 localparam GO = 1'b1;
 
 reg state, nxt_state;
 
+// Synchronous state logic
 always @(posedge clk, negedge rst_n) begin
 
 	if (!rst_n) 
@@ -65,16 +72,18 @@ always @(posedge clk, negedge rst_n) begin
 		
 end
 
+// nxt_state logic
 always @(*) begin
 	
+	// Default output values
 	clr_ID_vld = 1'b0;
 	clr_cmd_rdy = 0;
 
 	case (state) 
 
 		IDLE: if (cmd_rdy && cmd[7:6] == 2'b01) begin
-			nxt_state = GO;
-			in_transit_ff = 1;
+			nxt_state = GO; // if cmd = go, set GO to nxt_state 
+			in_transit_ff = 1; // Set in_transit
 			clr_cmd_rdy = 1;
 		end else begin
 			nxt_state = IDLE;
@@ -82,20 +91,20 @@ always @(*) begin
 		
 		
 		GO: if (cmd_rdy & cmd [7:6] == 2'b00) begin
-			nxt_state = IDLE;
+			nxt_state = IDLE;  // If cmd_rdy = 1 and cmd = stop loop back to beginning and clear in_transit
 			in_transit_ff = 0;
 			clr_cmd_rdy = 1;
 		end else if (cmd_rdy == 0 && ID_vld) begin
-			clr_ID_vld = 1;
-			if (ID[5:0] == cmd[5:0]) begin
+			clr_ID_vld = 1; // Set clr_ID_cld to 1
+			if (ID[5:0] == cmd[5:0]) begin // Now check ID
 				in_transit_ff = 0;
 				nxt_state = IDLE;
 			end else begin
 				nxt_state = GO;
 			end
 		end else if (cmd_rdy && cmd[7:6] == 2'b00) begin
-			in_transit_ff = 0;
-			nxt_state = IDLE;
+			in_transit_ff = 0; // If cmd_rdy = 1 and cmd = stop
+			nxt_state = IDLE; // Go back to IDLE
 			clr_cmd_rdy = 1;
 		end else begin
 			nxt_state = GO;
