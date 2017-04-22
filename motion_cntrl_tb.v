@@ -38,7 +38,7 @@ initial begin
     go = 0;
      cnv_cmplt = 0;
     rst_n = 0;
-    A2d_res = 712;
+    A2D_res = 712;
      #150;
                                
 
