@@ -11,7 +11,7 @@ wire [7:0] LEDs;
 wire [10:0] lft, rht;
 
 
-motion_cntrl DUT (.clk(clk), .rst_n(rst_n), .go(go), .start_conv(start_conv), .chnnl(chnnl), .cnv_cmplt(cnv_cmplt), .A2D_res(A2D_res),
+motion_cntrl iDUT (.clk(clk), .rst_n(rst_n), .go(go), .start_conv(start_conv), .chnnl(chnnl), .cnv_cmplt(cnv_cmplt), .A2D_res(A2D_res),
     .IR_in_en(IR_in_en), .IR_mid_en(IR_mid_en), .IR_out_en(IR_out_en), .LEDs(LEDs), .lft(lft), .rht(rht));
 
 
@@ -41,7 +41,7 @@ initial begin
     A2D_res = 712;
      #150;
                                
-
+$stop;
 
 
 
