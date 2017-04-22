@@ -85,10 +85,14 @@ always @(*) begin
 			nxt_state = IDLE;
 			in_transit_ff = 0;
 			clr_cmd_rdy = 1;
-		end else if (cmd_rdy == 0 && ID_vld && ID[5:0] == cmd[5:0]) begin
+		end else if (cmd_rdy == 0 && ID_vld) begin
 			clr_ID_vld = 1;
-			in_transit_ff = 0;
-			nxt_state = IDLE;
+			if (ID[5:0] == cmd[5:0]) begin
+				in_transit_ff = 0;
+				nxt_state = IDLE;
+			end else begin
+				nxt_state = GO;
+			end
 		end else if (cmd_rdy && cmd[7:6] == 2'b00) begin
 			in_transit_ff = 0;
 			nxt_state = IDLE;
