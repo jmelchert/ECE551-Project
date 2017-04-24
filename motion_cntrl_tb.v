@@ -15,33 +15,22 @@ motion_cntrl iDUT (.clk(clk), .rst_n(rst_n), .go(go), .start_conv(start_conv), .
     .IR_in_en(IR_in_en), .IR_mid_en(IR_mid_en), .IR_out_en(IR_out_en), .LEDs(LEDs), .lft(lft), .rht(rht));
 
 
-always #50 clk = ~clk;
+always #5 clk = ~clk;
 
 initial begin
     clk = 0;
     go = 0;
-    cnv_cmplt = 0;
+    cnv_cmplt = 1;
     rst_n = 0;
     A2D_res = 354;
     #150;
+
     rst_n = 1;
     #100;
     //starts by asserting go
     go = 1;
 
-    #100;
-    cnv_cmplt = 1;
 
-    #100;
-
-    // test with different input for consistency
-    go = 0;
-     cnv_cmplt = 0;
-    rst_n = 0;
-    A2D_res = 712;
-     #150;
-                               
-$stop;
 
 
 
