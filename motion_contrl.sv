@@ -397,8 +397,8 @@ always_ff @(posedge clk, negedge rst_n) begin
     rht_reg <= dst[11:0];
 end 
 
-assign lft = lft_reg;
-assign rht = rht_reg;
+assign lft = lft_reg[11:1];
+assign rht = rht_reg[11:1];
 
 // Assign IR enable signals to pwm signal
 always_comb begin
