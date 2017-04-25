@@ -61,8 +61,8 @@ end
 always @(posedge clk or negedge rst_n) begin
 	if (!rst_n) 
 		rx_rdy <= 0;
-	else if (clr_rx_rdy)
-		rx_rdy <= 0; // Clear when clr_rx_rdy is asserted
+	else if (rx_rdy_clr)
+		rx_rdy <= 0; // Clear when rx_rdy_clr is asserted
 	else if (start_count)
 		rx_rdy <= 0; // Clear when starting a new byte
 	else if (done_recieving) 

@@ -79,7 +79,7 @@ always_comb begin
 	
 	case (state) 
 
-		IDLE : if (strt_tx) begin  	 // If in state S1 and a 1 is asserted go to state 2
+		IDLE : if (trmt) begin  	 // If in state S1 and a 1 is asserted go to state 2
 			nxt_state = TRANSMITTING; // This means 2 consecutive 1s are detected
 			load = 1;
 			transmitting = 1;

@@ -1,13 +1,13 @@
-module barcode(clk, rst_n, BC_async, ID_vld, ID, clr_ID_vld);
+module barcode(clk, rst_n, BC, ID_vld, ID, clr_ID_vld);
 	
-input BC_async, clr_ID_vld, clk, rst_n;
+input BC, clr_ID_vld, clk, rst_n;
 output reg ID_vld;
 output reg[7:0] ID;
 reg[21:0] counter;
 reg[21:0] timer;
 reg[7:0] ID_inter;
 reg [3:0] shift_cnt;
-reg shift, shift_rst, cnt_rst, BC_async1, BC;
+reg shift, shift_rst, cnt_rst, BC_async1, BC_asynch;
 
 // USUAL DEFINITIONS FOR SM, will use 3 states
 typedef enum reg [1:0] {IDLE, CAPTURE, TRANSMIT} state_t;
@@ -56,8 +56,8 @@ end
 
 // Double flop the BC signal
 always@ (posedge clk) begin
-BC_async1 <= BC_async; 
-BC <= BC_async1;
+BC_async1 <= BC; 
+BC_asynch <= BC_async1;
 end
 
 // HERE ALL THE TRICKY JOB WAS DONE: GENERATE THE ID FROM BC SIGNAL!
@@ -78,9 +78,10 @@ IDLE: begin
 cnt_rst = 0;
 shift_rst = 0;
 timer = 22'b1111111111111111111111;
-if (BC == 0) begin
+if (BC_asynch == 0) begin
 ID_vld = 0;
 ID_inter = 0;
+cnt_rst = 1;
     //timer = 22'b1111111111111111111111;
     nxt_state = CAPTURE;
 end else begin
@@ -91,8 +92,9 @@ end
 /* CAPTURE CAPTURES THE TIME WHEN BC CHANGES FROM 0 TO 1, AND MULTIPLIES IT BY 2, GIVING US PERIOD OF THE TRANSMISSION
 	AS SOON AS PERIOD IS CALCULATED JUMPS TO THE TRANSMIT STATE */
 
-CAPTURE: begin 
-if (BC == 1) begin
+CAPTURE: begin
+cnt_rst = 0; 
+if (BC_asynch == 1) begin
 timer = (counter-2)*2; // PERIOD CALCULATION
 cnt_rst = 1; 
 nxt_state = TRANSMIT;
@@ -106,7 +108,7 @@ end
  */
 TRANSMIT: begin
 if (shift && (shift_cnt <= 4'd7)) begin // ACTUAL transmitting part
-    ID_inter[7-shift_cnt] = BC; // 	assigning values in proper order
+    ID_inter[7-shift_cnt] = BC_asynch; // 	assigning values in proper order
     cnt_rst = 1; 	  // reset counter every time bit is read
     nxt_state = TRANSMIT; // keep in the state of transmit until done
 end

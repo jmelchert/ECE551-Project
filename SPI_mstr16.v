@@ -1,4 +1,4 @@
-module SPI_mstr(clk,rst_n,MISO, wrt, cmd, rd_data, SS_n, SCLK, MOSI, done);
+module SPI_mstr16(clk,rst_n,MISO, wrt, cmd, rd_data, SS_n, SCLK, MOSI, done);
 
 
 input clk,rst_n;		// clock and active low asynch reset

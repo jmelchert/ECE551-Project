@@ -1,4 +1,4 @@
-module motion_contrl(clk, rst_n, go, start_conv, chnnl, cnv_cmplt, A2D_res,
+module motion_cntrl(clk, rst_n, go, strt_cnv, chnnl, cnv_cmplt, A2D_res,
 IR_in_en, IR_mid_en, IR_out_en, LEDs, lft, rht);
 
 //inputs
@@ -6,7 +6,7 @@ input clk, rst_n, go, cnv_cmplt;
 input [11:0] A2D_res;
 
 //outputs
-output reg start_conv, IR_in_en, IR_mid_en, IR_out_en;
+output reg strt_cnv, IR_in_en, IR_mid_en, IR_out_en;
 output reg [2:0] chnnl;
 output [7:0] LEDs;
 output [10:0] lft, rht;
@@ -89,7 +89,7 @@ always @(*) begin
 		
 			// Set SM signals for starting the timer and resetting the channel
 			rstAccum = 1;
-			start_conv = 0;
+			strt_cnv = 0;
 			channel = 0;
 			timer4096_en = 1;
 			nxt_state = PWM_IR_sel;
@@ -104,7 +104,7 @@ always @(*) begin
 		// Wait for the timer to be done
 		if (timer4096_en == 0) begin
 			nxt_state = A2D_Conv_1;
-			start_conv = 1; // Start the A2D conversion
+			strt_cnv = 1; // Start the A2D conversion
 		end else 
 			nxt_state = PWM_IR_sel;
   	
@@ -116,7 +116,7 @@ always @(*) begin
 		// Wait for conversion to be complete
 		if (cnv_cmplt == 1) begin
 		
-			start_conv = 0;
+			strt_cnv = 0;
 			nxt_state = Stall_1;
 		
 			// Set the variables for the ALU math for Accum
@@ -143,7 +143,7 @@ always @(*) begin
     Accum_Calc_1: begin
 		if (timer32_en == 0) begin
 			nxt_state = A2D_Conv_2;
-			start_conv = 1;
+			strt_cnv = 1;
 		end else begin
 		   nxt_state = Accum_Calc_1;
 		end
@@ -152,7 +152,7 @@ always @(*) begin
     // Wait for A2D conversion to be done
     A2D_Conv_2: begin
 		if (cnv_cmplt == 1) begin
-			start_conv = 0;
+			strt_cnv = 0;
 			nxt_state = Stall_2;
 			
 			// Set registers for ALU signals to compute Acuum
