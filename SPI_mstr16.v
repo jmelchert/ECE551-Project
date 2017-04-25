@@ -17,10 +17,14 @@ reg [4:0] bit_count;		// Counter for bit number
 reg shift_rx, shift_tx;		// Shift read and write signals
 reg initialize;
 reg [15:0] shift_reg_tx;	// Shift register for output
+reg firstTime, finished;
 
 // Counter for serial clock
 always @(posedge clk) begin
 	if (SS_n) begin
+		count = 5'b10000;
+		bit_count = 5'b00000;
+	end else if (bit_count == 5'h11) begin
 		count = 5'b10000;
 		bit_count = 5'b00000;
 	end else if (count == 5'b11111) begin
@@ -53,7 +57,7 @@ always @(posedge clk, negedge rst_n) begin
 	if (!rst_n)
 		shift_reg_tx <= 16'h0000;
 	else if (initialize)
-		shift_reg_tx = cmd; // initialize the data top be transmitted
+		shift_reg_tx = cmd; // initialize the data to be transmitted
 	else if (shift_tx) begin
 		shift_reg_tx <= {shift_reg_tx[14:0], 1'b0};
 	end
@@ -84,7 +88,7 @@ always @(*) begin
 	// defaults
 	shift_rx = 0;
 	shift_tx = 0;
-	SS_n = 1;
+	SS_n = 0;
 	done = 0;
 	nstate = IDLE;	  
 	initialize = 0;
@@ -96,14 +100,23 @@ always @(*) begin
 				nstate = WAIT;
 				SS_n = 0;
 				initialize = 1;
-			end 
+				firstTime = 1;
+				finished = 0;
+			end else if (firstTime == 0) begin
+				nstate = WAIT;
+				SS_n = 0;
+				initialize = 1;
+			end else begin
+				SS_n = 1;
+			end
 		end
 
 		SHIFTING : begin	
 
 			if (SCLK) begin
 				// assert shift_rx to shift read reg
-				shift_rx = 1;
+				if (!firstTime)
+					shift_rx = 1;
 				nstate = WAIT; 
 				SS_n = 0;
 			end else begin
@@ -134,11 +147,19 @@ always @(*) begin
 		end
 
 		FINISH : begin		
-			if (count == 5'h1F) begin
+			if (count == 5'h1F || finished) begin
 				// Finished transmitting
-				SS_n = 1;
+				
 				nstate = IDLE;
-				done = 1;
+				
+				if (firstTime && !finished) begin
+					firstTime = 0;
+				end else begin
+					firstTime = 1;
+					done = 1;
+					SS_n = 1;
+					finished = 1;
+				end
 			end else begin
 				// Wait until the SCLK clock cycle has finished
 				nstate = FINISH;

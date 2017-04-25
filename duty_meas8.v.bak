@@ -1,4 +1,4 @@
-module duty_meas8(clk,rst_n,PWM,duty);
+module duty_meas(clk,rst_n,PWM,duty);
 
 input clk,rst_n;
 input PWM;
