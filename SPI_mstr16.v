@@ -95,17 +95,17 @@ always @(*) begin
 
 	case (state)
 		IDLE : begin
-			if (wrt) begin
+			if (firstTime == 0) begin
+				nstate = WAIT;
+				SS_n = 0;
+				initialize = 1;
+			end else if (wrt) begin
 				// Begin the transmission process
 				nstate = WAIT;
 				SS_n = 0;
 				initialize = 1;
 				firstTime = 1;
 				finished = 0;
-			end else if (firstTime == 0) begin
-				nstate = WAIT;
-				SS_n = 0;
-				initialize = 1;
 			end else begin
 				SS_n = 1;
 			end
@@ -151,13 +151,13 @@ always @(*) begin
 				// Finished transmitting
 				
 				nstate = IDLE;
+				SS_n = 1;
 				
 				if (firstTime && !finished) begin
 					firstTime = 0;
 				end else begin
 					firstTime = 1;
 					done = 1;
-					SS_n = 1;
 					finished = 1;
 				end
 			end else begin

@@ -68,9 +68,9 @@ always @(*) begin
 	src1sel = 3'b000;
 	src0sel = 3'b000;
 	multiply = 0;
-	sub = 0;
 	mult2 = 0;
 	mult4 = 0;
+	sub = 0;
 	saturate = 0;
 	dst2Accum = 0;
 	dst2Err = 0;
@@ -112,35 +112,35 @@ always @(*) begin
 	
     
 	A2D_Conv_1: begin
+	
+		strt_cnv = 0;
 		
 		// Wait for conversion to be complete
 		if (cnv_cmplt == 1) begin
 		
-			strt_cnv = 0;
-			nxt_state = Stall_1;
-		
-			// Set the variables for the ALU math for Accum
+			
 			if(channel == 3'd2) begin
 				mult2 = 1;
 			end else if(channel == 3'd4) begin
 				mult4 = 1;
 			end else if(channel != 3'd0) 
 				nxt_state = IDLE;
+		
+			
+			nxt_state = Accum_Calc_1;
+			timer32_en = 1'b1; // Start the 32 bit timer
+			dst2Accum = 1; // Update Accum
+			
 		end else begin
 			nxt_state = A2D_Conv_1;
 		end
 	end
-
-	// Additional state for 1 more cycle for multiplication
-	Stall_1: begin
-		nxt_state = Accum_Calc_1;
-		timer32_en = 1'b1; // Start the 32 bit timer
-		channel = channel + 1; // Increment channel
-		dst2Accum = 1; // Update Accum
-	end
    
     // Finished acuum calc, now wait for timer32 to be done
     Accum_Calc_1: begin
+		if (channel == 0 || channel == 2 || channel == 4)
+			channel = channel + 1; // Increment channel
+	
 		if (timer32_en == 0) begin
 			nxt_state = A2D_Conv_2;
 			strt_cnv = 1;
@@ -151,40 +151,45 @@ always @(*) begin
 
     // Wait for A2D conversion to be done
     A2D_Conv_2: begin
+		
+		strt_cnv = 0;
+		
 		if (cnv_cmplt == 1) begin
-			strt_cnv = 0;
-			nxt_state = Stall_2;
+			
 			
 			// Set registers for ALU signals to compute Acuum
 			sub = 1;
-			
+				
 			if(channel == 3'd3) begin
 				mult2 = 1;
 			end else if(channel == 3'd5) begin
 				mult4 = 1;
 			end else if(channel != 3'd1) 
 				nxt_state = IDLE;
+		
+			
+			timer32_en = 0;
+			timer4096_en = 0;
+			nxt_state = Accum_Calc_2;
+			
+			// Update error or accum based on channel
+			if (channel == 5)
+				dst2Err = 1;
+			else 
+				dst2Accum = 1;
+			
 		end else begin
 			nxt_state = A2D_Conv_2;
 		end 
 	end
 
-	// Additional cycle for multiplication
-	Stall_2: begin 
-		channel = channel + 1; // increment channel
-		timer32_en = 0;
-		timer4096_en = 0;
-		nxt_state = Accum_Calc_2;
-		
-		// Update error or accum based on channel
-		if (channel == 5)
-			dst2Err = 1;
-		else 
-			dst2Accum = 1;
-	end
 
 	// Branch back to beginning or PI math based on channel
     Accum_Calc_2: begin
+		
+		if (channel == 1 || channel == 3 || channel == 5)
+			channel = channel + 1; // increment channel
+		
 		if (channel == 6) begin
 			nxt_state = Int_calc;
 		end else begin
@@ -206,20 +211,41 @@ always @(*) begin
 	end
 	
 	Icomp_calc: begin 
-		nxt_state = Pcomp_calc;
+		nxt_state = Stall_1;
 	
 	//	dst2Icmp = Iterm*Intgrl;
 		src1sel = 3'b001;
 		src0sel = 3'b001;
 		multiply = 1;
 		saturate = 0;
+		
+	end
+	
+	// Additional state for 1 more cycle for multiplication
+	Stall_1: begin
+		nxt_state = Pcomp_calc;
+		src1sel = 3'b001;
+		src0sel = 3'b001;
+		multiply = 1;
+		saturate = 0;
 		dst2Icmp = 1;
+		
 	end
 	
 	Pcomp_calc: begin 
-		nxt_state = PI_Accum_calc;
+		nxt_state = Stall_2;
 		
 	//	dst2Pcmp = Error*Pterm;
+		src1sel = 3'b010;
+		src0sel = 3'b100;
+		multiply = 1;
+		saturate = 0;
+		
+	end
+	
+	// Additional cycle for multiplication
+	Stall_2: begin 
+		nxt_state = PI_Accum_calc;
 		src1sel = 3'b010;
 		src0sel = 3'b100;
 		multiply = 1;
