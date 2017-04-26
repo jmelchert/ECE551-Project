@@ -12,8 +12,8 @@ pwm PWM_rht(.duty(mag_rht), .clk(clk), .rst_n(rst_n), .PWM_sig(pwm_rht));
 
 // getting absolute value of the input (left and right) signals
 always @ (*) begin
-  mag_lft = (lft[10] == 1) ? (~lft[9:0] + 1) : (lft[9:0]);
-  mag_rht = (rht[10] == 1) ? (~rht[9:0] + 1) : (rht[9:0]); 
+  mag_lft = (lft[10] == 1) ? (lft[9:0] == 10'b0) ? (~lft[9:0]) : (~lft[9:0] + 1) : (lft[9:0]);
+  mag_rht = (rht[10] == 1) ? (rht[9:0] == 10'b0) ? (~rht[9:0]) : (~rht[9:0] + 1) : (rht[9:0]); 
 
   if (lft[10] == 1) begin
     rev_lft = pwm_lft;

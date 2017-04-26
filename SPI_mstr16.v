@@ -151,11 +151,12 @@ always @(*) begin
 				// Finished transmitting
 				
 				nstate = IDLE;
-				SS_n = 1;
+				
 				
 				if (firstTime && !finished) begin
 					firstTime = 0;
 				end else begin
+					SS_n = 1;
 					firstTime = 1;
 					done = 1;
 					finished = 1;
