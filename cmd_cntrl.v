@@ -91,21 +91,21 @@ always @(*) begin
 		
 		
 		GO: if (cmd_rdy & cmd [7:6] == 2'b00) begin
-			nxt_state = IDLE;  // If cmd_rdy = 1 and cmd = stop loop back to beginning and clear in_transit
-			in_transit_ff = 0;
-			clr_cmd_rdy = 1;
-		end else if (cmd_rdy == 0 && ID_vld) begin
-			clr_ID_vld = 1; // Set clr_ID_cld to 1
-			if (ID[5:0] == cmd[5:0]) begin // Now check ID
+				nxt_state = IDLE;  // If cmd_rdy = 1 and cmd = stop loop back to beginning and clear in_transit
 				in_transit_ff = 0;
-				nxt_state = IDLE;
-			end else begin
-				nxt_state = GO;
-			end
-		end else if (cmd_rdy && cmd[7:6] == 2'b00) begin
-			in_transit_ff = 0; // If cmd_rdy = 1 and cmd = stop
-			nxt_state = IDLE; // Go back to IDLE
-			clr_cmd_rdy = 1;
+				clr_cmd_rdy = 1;
+			end else if (cmd_rdy == 0 && ID_vld) begin
+				clr_ID_vld = 1; // Set clr_ID_cld to 1
+				if (ID[5:0] == cmd[5:0]) begin // Now check ID
+					in_transit_ff = 0;
+					nxt_state = IDLE;
+				end else begin
+					nxt_state = GO;
+				end
+			end else if (cmd_rdy && cmd[7:6] == 2'b00) begin
+				in_transit_ff = 0; // If cmd_rdy = 1 and cmd = stop
+				nxt_state = IDLE; // Go back to IDLE
+				clr_cmd_rdy = 1;
 		end else begin
 			nxt_state = GO;
 		end
