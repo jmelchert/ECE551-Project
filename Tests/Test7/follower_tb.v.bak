@@ -12,7 +12,7 @@ wire IR_in_en, IR_mid_en, IR_out_en;
 wire buzz, buzz_n, prox_en, BC, TX_dbg;
 wire [7:0] led;
 wire [3:0] buzz_cnt,buzz_cnt_n;
-wire [7:0] duty_fwd_rht,duty_fwd_lft,duty_rev_rht,duty_rev_lft;
+wire [9:0] duty_fwd_rht,duty_fwd_lft,duty_rev_rht,duty_rev_lft;
 
 localparam STOP = 8'h00;
 localparam GO = 8'h40; 

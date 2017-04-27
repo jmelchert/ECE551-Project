@@ -106,9 +106,12 @@ always @(*) begin
 				in_transit_ff = 0; // If cmd_rdy = 1 and cmd = stop
 				nxt_state = IDLE; // Go back to IDLE
 				clr_cmd_rdy = 1;
-		end else begin
-			nxt_state = GO;
-		end
+			end else if (cmd_rdy) begin
+				clr_cmd_rdy = 1;
+				nxt_state = GO;
+			end else begin
+				nxt_state = GO;
+			end
 
 	endcase
 end 
