@@ -10,7 +10,7 @@ reg [3:0] shift_cnt;
 reg shift, shift_rst, cnt_rst, BC_async1, BC_asynch;
 
 // USUAL DEFINITIONS FOR SM, will use 3 states
-typedef enum reg [1:0] {IDLE, CAPTURE, TRANSMIT} state_t;
+typedef enum reg [1:0] {IDLE, CAPTURE, TRANSMIT, WAIT} state_t;
 state_t state, nxt_state;
 
 // FF for changing states
@@ -25,7 +25,7 @@ end
 // 22 bit counter for BIT transmission
 always@(posedge clk, negedge rst_n) begin
 
-if(!rst_n | cnt_rst | clr_ID_vld) begin //reset entire counter if any of those signals asserted
+if(!rst_n | cnt_rst /*| clr_ID_vld*/) begin //reset entire counter if any of those signals asserted
 counter <= 22'd0;
 shift <= 0;
 end
@@ -118,7 +118,7 @@ else if(shift_cnt == 8) begin // IF hit the end of the transmission
     ID = (ID_inter[7:6] == 2'b00)? ID_inter : ID;
     cnt_rst = 1;
     shift_rst = 1;
-    nxt_state = IDLE; // Go back to IDLE if done;
+    nxt_state = WAIT; // Go to WAIT if done;
 end 
 else begin
     cnt_rst = 0;
@@ -126,6 +126,17 @@ else begin
 end
 end
 
+WAIT: begin
+if(counter == timer/2) begin
+cnt_rst = 1;
+shift_rst = 1;
+nxt_state = IDLE;
+end else begin
+cnt_rst = 0;
+shift_rst = 0;
+nxt_state = WAIT;
+end
+end
 endcase
 
 
