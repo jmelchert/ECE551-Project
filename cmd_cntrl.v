@@ -7,10 +7,10 @@ output reg clr_cmd_rdy, in_transit, go, buzz, clr_ID_vld; // Ouputs
 output buzz_n;
 
 // Registers for internal signals
-reg in_transit_ff, en;
+reg en, rst_in_transit, set_in_transit;
 
 // Variables for the buzzer pwm signal
-reg [13:0] buzz_cnt = 0; 
+reg [13:0] buzz_cnt; 
 parameter INIT_VALUE = 14'b0; 
 parameter EXP_VALUE = 14'd12500; // 50MHZ clock divided by 4KHZ signal
 
@@ -20,9 +20,12 @@ always @(posedge clk, negedge rst_n) begin
 
 	if (!rst_n) begin
 		in_transit <= 0;
-		in_transit_ff <= 0;
-	end else 
-		in_transit <= in_transit_ff;
+	end else if (rst_in_transit) begin
+		in_transit <= 0;
+	end else if (set_in_transit) begin
+		in_transit <= 1;
+	end else
+		in_transit <= in_transit;
 		
 end
 
@@ -35,22 +38,25 @@ always @(*) begin
 end
 
 // Buzzer pwm logic
-always @(posedge clk or negedge rst_n) begin
-  if (!rst_n) begin
-    buzz <= 1'b0; 
-    buzz_cnt <= INIT_VALUE; // Initial value = 0;
-  end
-  else begin
-    if (en) // Increase when enabled
-      buzz_cnt <= buzz_cnt + 1'b1;
-    if (buzz_cnt >= EXP_VALUE/2) // 50% duty
-        buzz <= 1'b1;
-    else
-        buzz <= 1'b0;
-    end
-    if (buzz_cnt == EXP_VALUE) // Prevent Overflow
-        buzz_cnt <= INIT_VALUE;
- end
+always @(posedge clk, negedge rst_n) begin
+
+	if (!rst_n) begin
+ 	   buzz <= 1'b0; 
+	   buzz_cnt <= INIT_VALUE; // Initial value = 0;
+ 	end else begin
+	    if (en) begin // Increase when enabled
+			buzz_cnt <= buzz_cnt + 1'b1;
+		end
+		if (buzz_cnt >= EXP_VALUE/2) begin // 50% duty
+	        buzz <= 1'b1;
+	    end else begin
+			buzz <= 1'b0;
+		end
+   		if (buzz_cnt == EXP_VALUE) begin // Prevent Overflow
+	        buzz_cnt <= INIT_VALUE;
+		end
+	end
+end
 
 // Assign bzz_n to the inverse of buzz
 assign buzz_n = (en)? ~buzz : buzz; // Inversion only when enabled to vibrate.
@@ -76,14 +82,16 @@ end
 always @(*) begin
 	
 	// Default output values
-	clr_ID_vld = 1'b0;
+	clr_ID_vld = 0;
 	clr_cmd_rdy = 0;
+	set_in_transit = 0;
+	rst_in_transit = 0;
 
 	case (state) 
 
 		IDLE: if (cmd_rdy && cmd[7:6] == 2'b01) begin
 			nxt_state = GO; // if cmd = go, set GO to nxt_state 
-			in_transit_ff = 1; // Set in_transit
+			set_in_transit = 1; // Set in_transit
 			clr_cmd_rdy = 1;
 		end else begin
 			nxt_state = IDLE;
@@ -92,20 +100,16 @@ always @(*) begin
 		
 		GO: if (cmd_rdy & cmd [7:6] == 2'b00) begin
 				nxt_state = IDLE;  // If cmd_rdy = 1 and cmd = stop loop back to beginning and clear in_transit
-				in_transit_ff = 0;
+				rst_in_transit = 1;
 				clr_cmd_rdy = 1;
 			end else if (cmd_rdy == 0 && ID_vld) begin
 				clr_ID_vld = 1; // Set clr_ID_cld to 1
 				if (ID[5:0] == cmd[5:0]) begin // Now check ID
-					in_transit_ff = 0;
+					rst_in_transit = 1;
 					nxt_state = IDLE;
 				end else begin
 					nxt_state = GO;
 				end
-			end else if (cmd_rdy && cmd[7:6] == 2'b00) begin
-				in_transit_ff = 0; // If cmd_rdy = 1 and cmd = stop
-				nxt_state = IDLE; // Go back to IDLE
-				clr_cmd_rdy = 1;
 			end else if (cmd_rdy) begin
 				clr_cmd_rdy = 1;
 				nxt_state = GO;
@@ -113,6 +117,8 @@ always @(*) begin
 				nxt_state = GO;
 			end
 
+		default: 
+			nxt_state = IDLE;
 	endcase
 end 
 

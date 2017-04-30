@@ -50,14 +50,14 @@ end
 always @(posedge clk, negedge rst_n) begin
 
 	if (!rst_n)
-		tx_done  = 0;
+		tx_done  <= 0;
 	else begin
 		if (set_done)
-			tx_done = 1;
+			tx_done <= 1;
 		else if (clr_done)
-			tx_done = 0;
+			tx_done <= 0;
 		else 
-			tx_done = tx_done;
+			tx_done <= tx_done;
 	end
 end
 
@@ -76,6 +76,7 @@ always_comb begin
 		transmitting = 0;
 		set_done = 0;
 		clr_done = 0;
+		nxt_state = IDLE;
 	
 	case (state) 
 
@@ -96,6 +97,8 @@ always_comb begin
 			transmitting = 1;
 		end
 	
+		default:
+			nxt_state = IDLE;
 
 	endcase
 end

@@ -12,11 +12,11 @@ output [7:0] LEDs;
 output [10:0] lft, rht;
 
 // ALU registers
-reg signed [15:0] dst;
+reg [15:0] dst;
 reg [15:0] Accum, Pcomp;
 wire [13:0] Pterm;
 wire [11:0] Iterm;
-reg signed [11:0] Error, Intgrl, Icomp;
+reg [11:0] Error, Intgrl, Icomp;
 reg [11:0] Fwd;
 reg [2:0] src0sel, src1sel;
 reg sub, multiply, mult2, mult4, saturate;
@@ -26,10 +26,10 @@ reg [4:0] timer32;
 reg [11:0] timer4096;
 reg timer32_en, timer4096_en;
 reg [2:0] channel;
-reg [1:0] int_dec = 0;
+reg [1:0] int_dec;
 
 reg [11:0] lft_reg, rht_reg;
-reg dst2Accum, dst2Err, dst2Int, dst2Icmp, dst2Pcmp, dst2lft, dst2rht, rstAccum; //other signals we will need for SM and updating ALU registers
+reg dst2Accum, dst2Err, dst2Int, dst2Icmp, dst2Pcmp, dst2lft, dst2rht, rstAccum, inc_int_dec, inc_channel, en_pwm; //other signals we will need for SM and updating ALU registers
 
 // Output of pwm for IR enables
 wire pwm8_out;
@@ -61,7 +61,7 @@ end
 
 
 // state transition logic
-always @(*) begin
+always_comb begin
 
 // Defaults for all SM signals
 	nxt_state = IDLE;
@@ -80,6 +80,12 @@ always @(*) begin
 	dst2lft = 0;
 	dst2rht = 0;
 	rstAccum = 0;
+	timer4096_en = 0;
+	timer32_en = 0;
+	inc_int_dec = 0;
+	strt_cnv = 0;
+	inc_channel = 0;
+	en_pwm = 1;
   
   case (state)
   
@@ -90,11 +96,10 @@ always @(*) begin
 			// Set SM signals for starting the timer and resetting the channel
 			rstAccum = 1;
 			strt_cnv = 0;
-			channel = 0;
 			timer4096_en = 1;
 			nxt_state = PWM_IR_sel;
-			
 		end else begin
+			en_pwm = 0;
 			nxt_state = IDLE;
 		end
 	end
@@ -102,12 +107,13 @@ always @(*) begin
     PWM_IR_sel: begin
 
 		// Wait for the timer to be done
-		if (timer4096_en == 0) begin
+		if (timer4096 == 12'd4095) begin
 			nxt_state = A2D_Conv_1;
 			strt_cnv = 1; // Start the A2D conversion
-		end else 
+		end else begin
 			nxt_state = PWM_IR_sel;
-  	
+			timer4096_en = 1;
+  		end
 	end
 	
     
@@ -139,13 +145,14 @@ always @(*) begin
     // Finished acuum calc, now wait for timer32 to be done
     Accum_Calc_1: begin
 		if (channel == 0 || channel == 2 || channel == 4)
-			channel = channel + 1; // Increment channel
+			inc_channel = 1; // Increment channel
 	
-		if (timer32_en == 0) begin
+		if (timer32 == 5'd31) begin
 			nxt_state = A2D_Conv_2;
 			strt_cnv = 1;
 		end else begin
 		   nxt_state = Accum_Calc_1;
+		   timer32_en = 1;
 		end
 	end
 
@@ -168,8 +175,6 @@ always @(*) begin
 				nxt_state = IDLE;
 		
 			
-			timer32_en = 0;
-			timer4096_en = 0;
 			nxt_state = Accum_Calc_2;
 			
 			// Update error or accum based on channel
@@ -187,15 +192,17 @@ always @(*) begin
 	// Branch back to beginning or PI math based on channel
     Accum_Calc_2: begin
 		
-		if (channel == 1 || channel == 3 || channel == 5)
-			channel = channel + 1; // increment channel
-		
-		if (channel == 6) begin
+		if (channel == 5) begin
 			nxt_state = Int_calc;
 		end else begin
 			timer4096_en = 1;
 			nxt_state = PWM_IR_sel;
 		end
+
+		if (channel == 1 || channel == 3 || channel == 5)
+			inc_channel = 1; // increment channel
+		
+		
 	end
 
     Int_calc: begin
@@ -207,7 +214,7 @@ always @(*) begin
 		src0sel = 3'b001;
 		
 		dst2Int = &int_dec;
-		int_dec = int_dec + 1;
+		inc_int_dec = 1;
 	end
 	
 	Icomp_calc: begin 
@@ -296,37 +303,58 @@ always @(*) begin
 		multiply = 0;
 		saturate = 1;
 		sub = 0;
-		dst2lft = 1;
-		
-		
+		dst2lft = 1;		
 	end
 	
+	default: 
+		nxt_state = IDLE;
+
 	endcase
 end
-    
+   
+// inc_channel logic
+always_ff @(posedge clk, negedge rst_n) begin
+	if (!rst_n)
+		channel <= 3'b000;
+	else if (inc_channel) 
+		if (channel == 5)
+			channel <= 0;
+		else
+			channel <= channel + 1;
+	else 
+		channel <= channel;
+end 
+
+// int_dec logic
+always_ff @(posedge clk, negedge rst_n) begin
+	if (!rst_n)
+		int_dec <= 2'b00;
+	else if (inc_int_dec) 
+		int_dec <= int_dec + 1;
+	else 
+		int_dec <= int_dec;
+end 
+
+
 // Timer4096 logic
-always @ (posedge clk or negedge rst_n) begin
+always_ff @ (posedge clk or negedge rst_n) begin
   if (!rst_n) begin
-	timer4096 = 0;
-	timer4096_en = 0;
-  end else if (timer4096_en == 1 && timer4096 < 12'd4095)
-    timer4096 = timer4096 + 1;
+	timer4096 <= 0;
+  end else if (timer4096_en == 1 && timer4096 != 12'd4095)
+    timer4096 <= timer4096 + 1;
   else begin
-    timer4096 = 0;
-    timer4096_en = 0;
+    timer4096 <= 0;
   end
 end
 
 // Timer32 logic
-always @ (posedge clk or negedge rst_n) begin
+always_ff @ (posedge clk or negedge rst_n) begin
   if (!rst_n) begin
-	timer32 = 0;
-	timer32_en = 0;
-  end if (timer32_en == 1 && timer32 < 5'd31)
-    timer32 = timer32 + 1;
-  else begin
-    timer32 = 0;
-    timer32_en = 0;
+	timer32 <= 0;
+  end else if (timer32_en == 1 && timer32 != 5'd31) begin
+    timer32 <= timer32 + 1;
+  end else begin
+    timer32 <= 0;
   end
 end
 
@@ -355,6 +383,8 @@ always_comb begin
 		chnnl = 3;
 	else if (channel == 5)
 		chnnl = 7;
+	else
+		chnnl = 0;
 
 end
 
@@ -429,18 +459,28 @@ assign rht = rht_reg[11:1];
 // Assign IR enable signals to pwm signal
 always_comb begin
 
-	if (channel == 0 || channel == 1) begin
-		IR_in_en = pwm8_out;
+	if (en_pwm) begin
+		if (channel == 0 || channel == 1) begin
+			IR_in_en = pwm8_out;
+			IR_mid_en = 0;
+			IR_out_en = 0;
+		end else if (channel == 2 || channel == 3) begin
+			IR_in_en = 0;
+			IR_mid_en = pwm8_out;
+			IR_out_en = 0;
+		end else if (channel == 4 || channel == 5) begin
+			IR_in_en = 0;
+			IR_mid_en = 0;
+			IR_out_en = pwm8_out;
+		end else begin
+			IR_in_en = 0;
+			IR_mid_en = 0;
+			IR_out_en = 0;
+		end
+	end else begin
+		IR_in_en = 0;
 		IR_mid_en = 0;
 		IR_out_en = 0;
-	end else if (channel == 2 || channel == 3) begin
-		IR_in_en = 0;
-		IR_mid_en = pwm8_out;
-		IR_out_en = 0;
-	end else if (channel == 4 || channel == 5) begin
-		IR_in_en = 0;
-		IR_mid_en = 0;
-		IR_out_en = pwm8_out;
 	end
 
 end

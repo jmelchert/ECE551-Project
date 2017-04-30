@@ -17,27 +17,27 @@ reg [4:0] bit_count;		// Counter for bit number
 reg shift_rx, shift_tx;		// Shift read and write signals
 reg initialize;
 reg [15:0] shift_reg_tx;	// Shift register for output
-reg firstTime, finished;
+reg firstTime, finished, set_firstTime, reset_firstTime, set_finished, reset_finished;
 
 // Counter for serial clock
 always @(posedge clk) begin
 	if (SS_n) begin
-		count = 5'b10000;
-		bit_count = 5'b00000;
+		count <= 5'b10000;
+		bit_count <= 5'b00000;
 	end else if (bit_count == 5'h11) begin
-		count = 5'b10000;
-		bit_count = 5'b00000;
+		count <= 5'b10000;
+		bit_count <= 5'b00000;
 	end else if (count == 5'b11111) begin
 		// This is for the little back shelf 
 		if (bit_count[4]) begin
-			count = 5'b10000;
+			count <= 5'b10000;
 		end else begin
-			count = 5'b00000;
+			count <= 5'b00000;
 		end
 		// Increase bit count 
-		bit_count = bit_count + 1;
+		bit_count <= bit_count + 1;
 	end else
-		count = count + 1;
+		count <= count + 1;
 end
 
 // Assign serial clock to the fifth bit of count
@@ -57,7 +57,7 @@ always @(posedge clk, negedge rst_n) begin
 	if (!rst_n)
 		shift_reg_tx <= 16'h0000;
 	else if (initialize)
-		shift_reg_tx = cmd; // initialize the data to be transmitted
+		shift_reg_tx <= cmd; // initialize the data to be transmitted
 	else if (shift_tx) begin
 		shift_reg_tx <= {shift_reg_tx[14:0], 1'b0};
 	end
@@ -92,6 +92,10 @@ always @(*) begin
 	done = 0;
 	nstate = IDLE;	  
 	initialize = 0;
+	set_firstTime = 0;
+	reset_firstTime = 0;
+	set_finished = 0;
+	reset_finished = 0;
 
 	case (state)
 		IDLE : begin
@@ -104,8 +108,8 @@ always @(*) begin
 				nstate = WAIT;
 				SS_n = 0;
 				initialize = 1;
-				firstTime = 1;
-				finished = 0;
+				set_firstTime = 1;
+				reset_finished = 1;
 			end else begin
 				SS_n = 1;
 			end
@@ -154,12 +158,12 @@ always @(*) begin
 				
 				
 				if (firstTime && !finished) begin
-					firstTime = 0;
+					reset_firstTime = 1;
 				end else begin
 					SS_n = 1;
-					firstTime = 1;
+					set_firstTime = 1;
 					done = 1;
-					finished = 1;
+					set_finished = 1;
 				end
 			end else begin
 				// Wait until the SCLK clock cycle has finished
@@ -168,8 +172,34 @@ always @(*) begin
 			end 
 		end
 
+		default:
+			nstate = IDLE;
 	endcase
 end
+
+// finished logic
+always @(posedge clk, negedge rst_n) begin
+	if (!rst_n)
+		finished <= 0;
+	else if (set_finished) 
+		finished <= 1;
+	else if (reset_finished)
+		finished <= 0;
+	else 
+		finished <= finished;
+end 
+
+// firstTime logic
+always @(posedge clk, negedge rst_n) begin
+	if (!rst_n)
+		firstTime <= 1;
+	else if (set_firstTime) 
+		firstTime <= 1;
+	else if (reset_firstTime)
+		firstTime <= 0;
+	else 
+		firstTime <= firstTime;
+end 
 
 endmodule  
 

@@ -1,0 +1,51 @@
+#################################
+#Read in the verilog files first#
+#################################
+read_file -format verilog { follower.v }
+read_file -format sverilog { A2D_intf.sv }
+read_file -format sverilog { alu.sv }
+read_file -format sverilog { barcode.sv }
+read_file -format verilog { cmd_cntrl.v }
+read_file -format sverilog { dig_core.sv }
+read_file -format sverilog { motion_cntrl.sv }
+read_file -format verilog { motor_cntrl.v }
+read_file -format sverilog { pwm.sv }
+read_file -format verilog { pwm8.v }
+read_file -format verilog { SPI_mstr16.v }
+read_file -format verilog { UART_rcv.v }
+read_file -format sverilog { UART_tx.sv }
+
+
+
+#################################
+#Set Current design to top level#
+#################################
+set current_design Follower
+
+create_clock -name "clk" -period 2.5 -waveform { 0 1.25 } clk
+set prim_inputs [remove_from_collection [all_inputs] [find port clk]]
+
+###########
+#Set Drive#
+###########
+set_driving_cell -lib_cell ND2D2BWP -pin Z -library tcbn40lpbwptc [copy_collection $prim_inputs]
+
+################################
+#Set wireload & transition time#
+################################
+set_input_delay -clock clk .5 [copy_collection $prim_inputs]
+set_output_delay -clock clk .5 [all_outputs]
+set_max_transition 0.15 [current_design]
+set_load 0.1 [all_outputs]
+set_wire_load_model -name TSMC32K_Lowk_Conservative -library tcbn40lpbwptc
+set_max_transition 0.15 [current_design]
+set_clock_uncertainty 0.10 clk
+set_fix_hold clk
+
+####################
+#Compile the Design#
+####################
+compile_ultra
+
+
+write –format verilog follower -output follower.vg

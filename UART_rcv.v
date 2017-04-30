@@ -22,7 +22,7 @@ end
 always @(posedge clk or negedge rst_n) begin
 	if (!rst_n) begin
 		shift_reg <= 10'h000; 	// Reset to 0
-		rx_data = 8'h00;
+		rx_data <= 8'h00;
 	end else if (shift) begin
 		shift_reg <= {RX_sync_1, shift_reg[9:1]}; // Shift in when shift is asserted
 		rx_data <= shift_reg[8:1];
@@ -90,6 +90,7 @@ always @(*) begin
 		shift = 0;
 		start_count = 1;
 		done_recieving = 0;
+		nxt_state = IDLE;
 	
 	case (state) 
 
@@ -107,10 +108,14 @@ always @(*) begin
 			end else begin
 				if (baud_count == 12'h516) begin 
 					shift = 1; // Recieve new bit every half a baud count
+					nxt_state = SHIFTING;
 				end else begin
 					nxt_state = SHIFTING; // Otherwise just wait
 			end
 		end
+
+		default:
+			nxt_state = IDLE;
 	endcase
 end
 
