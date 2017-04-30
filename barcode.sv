@@ -1,6 +1,6 @@
 module barcode(clk, rst_n, BC, ID_vld, ID, clr_ID_vld);
 	
-input BC, clr_ID_vld, clk, rst_n;
+input BC, clr_ID_vld, clk, rst_n; 
 output reg ID_vld;
 output reg[7:0] ID;
 reg[21:0] counter;
