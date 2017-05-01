@@ -1,0 +1,725 @@
+Analysis & Synthesis report for Follower
+Mon May 01 08:00:14 2017
+Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Analysis & Synthesis DSP Block Usage Summary
+  9. State Machine - |Follower|A2D_intf:iA2D|SPI_mstr16:iSPI|state
+ 10. State Machine - |Follower|barcode:iBC|state
+ 11. State Machine - |Follower|dig_core:iCORE|motion_cntrl:iMTN|state
+ 12. Registers Removed During Synthesis
+ 13. Removed Registers Triggering Further Register Optimizations
+ 14. General Register Statistics
+ 15. Inverted Register Statistics
+ 16. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 17. Parameter Settings for User Entity Instance: dig_core:iCORE|cmd_cntrl:iCMD
+ 18. Parameter Settings for Inferred Entity Instance: dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|lpm_mult:Mult0
+ 19. lpm_mult Parameter Settings by Entity Instance
+ 20. Port Connectivity Checks: "A2D_intf:iA2D|SPI_mstr16:iSPI"
+ 21. Port Connectivity Checks: "dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR"
+ 22. Port Connectivity Checks: "dig_core:iCORE|motion_cntrl:iMTN|alu:iALU"
+ 23. Port Connectivity Checks: "dig_core:iCORE"
+ 24. Post-Synthesis Netlist Statistics for Top Partition
+ 25. Elapsed Time Per Partition
+ 26. Analysis & Synthesis Messages
+ 27. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++------------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Mon May 01 08:00:14 2017       ;
+; Quartus Prime Version              ; 16.0.0 Build 211 04/27/2016 SJ Lite Edition ;
+; Revision Name                      ; Follower                                    ;
+; Top-level Entity Name              ; Follower                                    ;
+; Family                             ; Cyclone IV E                                ;
+; Total logic elements               ; 701                                         ;
+;     Total combinational functions  ; 605                                         ;
+;     Dedicated logic registers      ; 308                                         ;
+; Total registers                    ; 308                                         ;
+; Total pins                         ; 27                                          ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0                                           ;
+; Embedded Multiplier 9-bit elements ; 2                                           ;
+; Total PLLs                         ; 0                                           ;
++------------------------------------+---------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP4CE22F17C6       ;                    ;
+; Top-level entity name                                                      ; Follower           ; Follower           ;
+; Family name                                                                ; Cyclone IV E       ; Cyclone V          ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                 ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM Block Balancing                                                   ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; On                 ; On                 ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
+Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 4      ;
+; Maximum allowed            ; 1      ;
++----------------------------+--------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                                                            ;
++----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                                                                                        ; Library ;
++----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+---------+
+; follower.v                       ; yes             ; User Verilog HDL File        ; I:/GitHub/ECE551-Project/follower.v                                                                                                                 ;         ;
+; dig_core.sv                      ; yes             ; User SystemVerilog HDL File  ; I:/GitHub/ECE551-Project/dig_core.sv                                                                                                                ;         ;
+; pwm.sv                           ; yes             ; User SystemVerilog HDL File  ; I:/GitHub/ECE551-Project/pwm.sv                                                                                                                     ;         ;
+; motion_cntrl.sv                  ; yes             ; User SystemVerilog HDL File  ; I:/GitHub/ECE551-Project/motion_cntrl.sv                                                                                                            ;         ;
+; barcode.sv                       ; yes             ; User SystemVerilog HDL File  ; I:/GitHub/ECE551-Project/barcode.sv                                                                                                                 ;         ;
+; alu.sv                           ; yes             ; User SystemVerilog HDL File  ; I:/GitHub/ECE551-Project/alu.sv                                                                                                                     ;         ;
+; A2D_intf.sv                      ; yes             ; User SystemVerilog HDL File  ; I:/GitHub/ECE551-Project/A2D_intf.sv                                                                                                                ;         ;
+; cmd_cntrl.v                      ; yes             ; Auto-Found Verilog HDL File  ; I:/GitHub/ECE551-Project/cmd_cntrl.v                                                                                                                ;         ;
+; pwm8.v                           ; yes             ; Auto-Found Verilog HDL File  ; I:/GitHub/ECE551-Project/pwm8.v                                                                                                                     ;         ;
+; uart_rcv.v                       ; yes             ; Auto-Found Verilog HDL File  ; I:/GitHub/ECE551-Project/uart_rcv.v                                                                                                                 ;         ;
+; motor_cntrl.v                    ; yes             ; Auto-Found Verilog HDL File  ; I:/GitHub/ECE551-Project/motor_cntrl.v                                                                                                              ;         ;
+; spi_mstr16.v                     ; yes             ; Auto-Found Verilog HDL File  ; I:/GitHub/ECE551-Project/spi_mstr16.v                                                                                                               ;         ;
+; lpm_mult.tdf                     ; yes             ; Megafunction                 ; c:/programdata/app-v/cfe345e7-b20f-4013-ab10-0350f684dc77/c3446511-ec8f-4614-85f4-05df449d03f2/root/quartus/libraries/megafunctions/lpm_mult.tdf    ;         ;
+; aglobal160.inc                   ; yes             ; Megafunction                 ; c:/programdata/app-v/cfe345e7-b20f-4013-ab10-0350f684dc77/c3446511-ec8f-4614-85f4-05df449d03f2/root/quartus/libraries/megafunctions/aglobal160.inc  ;         ;
+; lpm_add_sub.inc                  ; yes             ; Megafunction                 ; c:/programdata/app-v/cfe345e7-b20f-4013-ab10-0350f684dc77/c3446511-ec8f-4614-85f4-05df449d03f2/root/quartus/libraries/megafunctions/lpm_add_sub.inc ;         ;
+; multcore.inc                     ; yes             ; Megafunction                 ; c:/programdata/app-v/cfe345e7-b20f-4013-ab10-0350f684dc77/c3446511-ec8f-4614-85f4-05df449d03f2/root/quartus/libraries/megafunctions/multcore.inc    ;         ;
+; bypassff.inc                     ; yes             ; Megafunction                 ; c:/programdata/app-v/cfe345e7-b20f-4013-ab10-0350f684dc77/c3446511-ec8f-4614-85f4-05df449d03f2/root/quartus/libraries/megafunctions/bypassff.inc    ;         ;
+; altshift.inc                     ; yes             ; Megafunction                 ; c:/programdata/app-v/cfe345e7-b20f-4013-ab10-0350f684dc77/c3446511-ec8f-4614-85f4-05df449d03f2/root/quartus/libraries/megafunctions/altshift.inc    ;         ;
+; db/mult_v5t.tdf                  ; yes             ; Auto-Generated Megafunction  ; I:/GitHub/ECE551-Project/db/mult_v5t.tdf                                                                                                            ;         ;
++----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+---------+
+
+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimated Total logic elements              ; 701       ;
+;                                             ;           ;
+; Total combinational functions               ; 605       ;
+; Logic element usage by number of LUT inputs ;           ;
+;     -- 4 input functions                    ; 353       ;
+;     -- 3 input functions                    ; 81        ;
+;     -- <=2 input functions                  ; 171       ;
+;                                             ;           ;
+; Logic elements by mode                      ;           ;
+;     -- normal mode                          ; 484       ;
+;     -- arithmetic mode                      ; 121       ;
+;                                             ;           ;
+; Total registers                             ; 308       ;
+;     -- Dedicated logic registers            ; 308       ;
+;     -- I/O registers                        ; 0         ;
+;                                             ;           ;
+; I/O pins                                    ; 27        ;
+;                                             ;           ;
+; Embedded Multiplier 9-bit elements          ; 2         ;
+;                                             ;           ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 308       ;
+; Total fan-out                               ; 3167      ;
+; Average fan-out                             ; 3.27      ;
++---------------------------------------------+-----------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                             ;
++------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------+--------------+--------------+
+; Compilation Hierarchy Node               ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                        ; Entity Name  ; Library Name ;
++------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------+--------------+--------------+
+; |Follower                                ; 605 (1)           ; 308 (2)      ; 0           ; 2            ; 0       ; 1         ; 27   ; 0            ; |Follower                                                                                  ; Follower     ; work         ;
+;    |A2D_intf:iA2D|                       ; 48 (0)            ; 33 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Follower|A2D_intf:iA2D                                                                    ; A2D_intf     ; work         ;
+;       |SPI_mstr16:iSPI|                  ; 48 (48)           ; 33 (33)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Follower|A2D_intf:iA2D|SPI_mstr16:iSPI                                                    ; SPI_mstr16   ; work         ;
+;    |barcode:iBC|                         ; 97 (97)           ; 71 (71)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Follower|barcode:iBC                                                                      ; barcode      ; work         ;
+;    |dig_core:iCORE|                      ; 349 (0)           ; 153 (0)      ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |Follower|dig_core:iCORE                                                                   ; dig_core     ; work         ;
+;       |cmd_cntrl:iCMD|                   ; 50 (50)           ; 17 (17)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Follower|dig_core:iCORE|cmd_cntrl:iCMD                                                    ; cmd_cntrl    ; work         ;
+;       |motion_cntrl:iMTN|                ; 299 (113)         ; 136 (135)    ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |Follower|dig_core:iCORE|motion_cntrl:iMTN                                                 ; motion_cntrl ; work         ;
+;          |alu:iALU|                      ; 183 (183)         ; 0 (0)        ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU                                        ; alu          ; work         ;
+;             |lpm_mult:Mult0|             ; 0 (0)             ; 0 (0)        ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|lpm_mult:Mult0                         ; lpm_mult     ; work         ;
+;                |mult_v5t:auto_generated| ; 0 (0)             ; 0 (0)        ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|lpm_mult:Mult0|mult_v5t:auto_generated ; mult_v5t     ; work         ;
+;          |pwm8:pwm_IR|                   ; 3 (3)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR                                     ; pwm8         ; work         ;
+;    |motor_cntrl:iMTR|                    ; 80 (49)           ; 12 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Follower|motor_cntrl:iMTR                                                                 ; motor_cntrl  ; work         ;
+;       |pwm:PWM_lft|                      ; 19 (19)           ; 11 (11)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Follower|motor_cntrl:iMTR|pwm:PWM_lft                                                     ; pwm          ; work         ;
+;       |pwm:PWM_rht|                      ; 12 (12)           ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Follower|motor_cntrl:iMTR|pwm:PWM_rht                                                     ; pwm          ; work         ;
+;    |uart_rcv:iCMD|                       ; 30 (30)           ; 37 (37)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Follower|uart_rcv:iCMD                                                                    ; uart_rcv     ; work         ;
++------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------+--------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++-----------------------------------------------------+
+; Analysis & Synthesis DSP Block Usage Summary        ;
++---------------------------------------+-------------+
+; Statistic                             ; Number Used ;
++---------------------------------------+-------------+
+; Simple Multipliers (9-bit)            ; 0           ;
+; Simple Multipliers (18-bit)           ; 1           ;
+; Embedded Multiplier Blocks            ; --          ;
+; Embedded Multiplier 9-bit elements    ; 2           ;
+; Signed Embedded Multipliers           ; 1           ;
+; Unsigned Embedded Multipliers         ; 0           ;
+; Mixed Sign Embedded Multipliers       ; 0           ;
+; Variable Sign Embedded Multipliers    ; 0           ;
+; Dedicated Input Shift Register Chains ; 0           ;
++---------------------------------------+-------------+
+Note: number of Embedded Multiplier Blocks used is only available after a successful fit.
+
+
+Encoding Type:  One-Hot
++--------------------------------------------------------------------------+
+; State Machine - |Follower|A2D_intf:iA2D|SPI_mstr16:iSPI|state            ;
++----------------+--------------+------------+----------------+------------+
+; Name           ; state.FINISH ; state.WAIT ; state.SHIFTING ; state.IDLE ;
++----------------+--------------+------------+----------------+------------+
+; state.IDLE     ; 0            ; 0          ; 0              ; 0          ;
+; state.SHIFTING ; 0            ; 0          ; 1              ; 1          ;
+; state.WAIT     ; 0            ; 1          ; 0              ; 1          ;
+; state.FINISH   ; 1            ; 0          ; 0              ; 1          ;
++----------------+--------------+------------+----------------+------------+
+
+
+Encoding Type:  One-Hot
++--------------------------------------------------------------------------------------------------+
+; State Machine - |Follower|barcode:iBC|state                                                      ;
++-----------------+----------------+----------------+---------------+------------+-----------------+
+; Name            ; state.WAIT_LOW ; state.TRANSMIT ; state.CAPTURE ; state.IDLE ; state.WAIT_HIGH ;
++-----------------+----------------+----------------+---------------+------------+-----------------+
+; state.IDLE      ; 0              ; 0              ; 0             ; 0          ; 0               ;
+; state.CAPTURE   ; 0              ; 0              ; 1             ; 1          ; 0               ;
+; state.TRANSMIT  ; 0              ; 1              ; 0             ; 1          ; 0               ;
+; state.WAIT_LOW  ; 1              ; 0              ; 0             ; 1          ; 0               ;
+; state.WAIT_HIGH ; 0              ; 0              ; 0             ; 1          ; 1               ;
++-----------------+----------------+----------------+---------------+------------+-----------------+
+
+
+Encoding Type:  One-Hot
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |Follower|dig_core:iCORE|motion_cntrl:iMTN|state                                                                                                                                                                                                                                           ;
++----------------------+----------------+----------------------+----------------+---------------------+------------------+------------------+----------------+--------------------+---------------+------------------+--------------------+---------------+------------------+------------------+------------+
+; Name                 ; state.lft_calc ; state.PI_Accum2_calc ; state.rht_calc ; state.PI_Accum_calc ; state.Pcomp_calc ; state.Icomp_calc ; state.Int_calc ; state.Accum_Calc_2 ; state.Stall_2 ; state.A2D_Conv_2 ; state.Accum_Calc_1 ; state.Stall_1 ; state.A2D_Conv_1 ; state.PWM_IR_sel ; state.IDLE ;
++----------------------+----------------+----------------------+----------------+---------------------+------------------+------------------+----------------+--------------------+---------------+------------------+--------------------+---------------+------------------+------------------+------------+
+; state.IDLE           ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 0          ;
+; state.PWM_IR_sel     ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 1                ; 1          ;
+; state.A2D_Conv_1     ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 1                ; 0                ; 1          ;
+; state.Stall_1        ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 1             ; 0                ; 0                ; 1          ;
+; state.Accum_Calc_1   ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 1                  ; 0             ; 0                ; 0                ; 1          ;
+; state.A2D_Conv_2     ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 1                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
+; state.Stall_2        ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 1             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
+; state.Accum_Calc_2   ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 1                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
+; state.Int_calc       ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 1              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
+; state.Icomp_calc     ; 0              ; 0                    ; 0              ; 0                   ; 0                ; 1                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
+; state.Pcomp_calc     ; 0              ; 0                    ; 0              ; 0                   ; 1                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
+; state.PI_Accum_calc  ; 0              ; 0                    ; 0              ; 1                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
+; state.rht_calc       ; 0              ; 0                    ; 1              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
+; state.PI_Accum2_calc ; 0              ; 1                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
+; state.lft_calc       ; 1              ; 0                    ; 0              ; 0                   ; 0                ; 0                ; 0              ; 0                  ; 0             ; 0                ; 0                  ; 0             ; 0                ; 0                ; 1          ;
++----------------------+----------------+----------------------+----------------+---------------------+------------------+------------------+----------------+--------------------+---------------+------------------+--------------------+---------------+------------------+------------------+------------+
+
+
++-------------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                                    ;
++-----------------------------------------------------+-------------------------------------------------+
+; Register name                                       ; Reason for Removal                              ;
++-----------------------------------------------------+-------------------------------------------------+
+; dig_core:iCORE|motion_cntrl:iMTN|Pcomp[12..15]      ; Stuck at GND due to stuck port data_in          ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[9]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[9] ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[8]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[8] ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[7]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[7] ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[6]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[6] ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[5]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[5] ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[4]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[4] ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[3]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[3] ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[2]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[2] ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[1]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[1] ;
+; motor_cntrl:iMTR|pwm:PWM_rht|cnt[0]                 ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[0] ;
+; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[0..10]   ; Stuck at GND due to stuck port data_in          ;
+; dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR|cnt[0] ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[0] ;
+; dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR|cnt[1] ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[1] ;
+; A2D_intf:iA2D|SPI_mstr16:iSPI|state~4               ; Lost fanout                                     ;
+; A2D_intf:iA2D|SPI_mstr16:iSPI|state~5               ; Lost fanout                                     ;
+; barcode:iBC|state~4                                 ; Lost fanout                                     ;
+; barcode:iBC|state~5                                 ; Lost fanout                                     ;
+; dig_core:iCORE|motion_cntrl:iMTN|state~4            ; Lost fanout                                     ;
+; dig_core:iCORE|motion_cntrl:iMTN|state~5            ; Lost fanout                                     ;
+; dig_core:iCORE|motion_cntrl:iMTN|state~6            ; Lost fanout                                     ;
+; dig_core:iCORE|motion_cntrl:iMTN|state~7            ; Lost fanout                                     ;
+; dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR|cnt[2] ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[2] ;
+; dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR|cnt[3] ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[3] ;
+; dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR|cnt[4] ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[4] ;
+; dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR|cnt[5] ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[5] ;
+; dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR|cnt[6] ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[6] ;
+; dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR|cnt[7] ; Merged with motor_cntrl:iMTR|pwm:PWM_lft|cnt[7] ;
+; Total Number of Removed Registers = 41              ;                                                 ;
++-----------------------------------------------------+-------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                                                ;
++-----------------------------------------------+---------------------------+------------------------------------------------+
+; Register name                                 ; Reason for Removal        ; Registers Removed due to This Register         ;
++-----------------------------------------------+---------------------------+------------------------------------------------+
+; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[0] ; Stuck at GND              ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[1], ;
+;                                               ; due to stuck port data_in ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[2], ;
+;                                               ;                           ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[3], ;
+;                                               ;                           ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[4], ;
+;                                               ;                           ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[5], ;
+;                                               ;                           ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[6], ;
+;                                               ;                           ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[7], ;
+;                                               ;                           ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[8], ;
+;                                               ;                           ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[9], ;
+;                                               ;                           ; A2D_intf:iA2D|SPI_mstr16:iSPI|shift_reg_tx[10] ;
++-----------------------------------------------+---------------------------+------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 308   ;
+; Number of registers using Synchronous Clear  ; 69    ;
+; Number of registers using Synchronous Load   ; 5     ;
+; Number of registers using Asynchronous Clear ; 294   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 150   ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++---------------------------------------------------+
+; Inverted Register Statistics                      ;
++-----------------------------------------+---------+
+; Inverted Register                       ; Fan out ;
++-----------------------------------------+---------+
+; A2D_intf:iA2D|SPI_mstr16:iSPI|firstTime ; 12      ;
+; barcode:iBC|timer[0]                    ; 1       ;
+; barcode:iBC|timer[1]                    ; 1       ;
+; barcode:iBC|timer[2]                    ; 1       ;
+; barcode:iBC|timer[3]                    ; 1       ;
+; barcode:iBC|timer[6]                    ; 1       ;
+; barcode:iBC|timer[7]                    ; 1       ;
+; barcode:iBC|timer[4]                    ; 1       ;
+; barcode:iBC|timer[5]                    ; 1       ;
+; barcode:iBC|timer[8]                    ; 1       ;
+; barcode:iBC|timer[9]                    ; 1       ;
+; barcode:iBC|timer[10]                   ; 1       ;
+; barcode:iBC|timer[11]                   ; 1       ;
+; barcode:iBC|timer[12]                   ; 1       ;
+; barcode:iBC|timer[13]                   ; 1       ;
+; barcode:iBC|timer[14]                   ; 1       ;
+; barcode:iBC|timer[15]                   ; 1       ;
+; barcode:iBC|timer[16]                   ; 1       ;
+; barcode:iBC|timer[17]                   ; 1       ;
+; barcode:iBC|timer[18]                   ; 1       ;
+; barcode:iBC|timer[19]                   ; 1       ;
+; barcode:iBC|timer[20]                   ; 1       ;
+; barcode:iBC|timer[21]                   ; 1       ;
+; Total number of inverted registers = 23 ;         ;
++-----------------------------------------+---------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                        ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------------------+
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|rht_reg[8]             ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|lft_reg[11]            ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|channel[0]             ;
+; 3:1                ; 14 bits   ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; Yes        ; |Follower|dig_core:iCORE|cmd_cntrl:iCMD|buzz_cnt[13]              ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |Follower|barcode:iBC|shift_cnt[3]                                ;
+; 3:1                ; 22 bits   ; 44 LEs        ; 22 LEs               ; 22 LEs                 ; Yes        ; |Follower|barcode:iBC|counter[6]                                  ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|Accum[0]               ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|Fwd[7]                 ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |Follower|uart_rcv:iCMD|baud_count[10]                            ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |Follower|uart_rcv:iCMD|bit_count[3]                              ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |Follower|A2D_intf:iA2D|SPI_mstr16:iSPI|bit_count[2]              ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |Follower|A2D_intf:iA2D|SPI_mstr16:iSPI|count[0]                  ;
+; 6:1                ; 3 bits    ; 12 LEs        ; 9 LEs                ; 3 LEs                  ; Yes        ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|Accum[12]              ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 20 LEs               ; 0 LEs                  ; No         ; |Follower|motor_cntrl:iMTR|mag_rht[4]                             ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 20 LEs               ; 0 LEs                  ; No         ; |Follower|motor_cntrl:iMTR|mag_lft[0]                             ;
+; 8:1                ; 8 bits    ; 40 LEs        ; 24 LEs               ; 16 LEs                 ; No         ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|pre_src0[5]   ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|src0_2mul[14] ;
+; 4:1                ; 12 bits   ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|dst[4]        ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 9 LEs                ; 0 LEs                  ; No         ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|pre_src0[10]  ;
+; 6:1                ; 11 bits   ; 44 LEs        ; 44 LEs               ; 0 LEs                  ; No         ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|src0_2mul[7]  ;
+; 9:1                ; 7 bits    ; 42 LEs        ; 21 LEs               ; 21 LEs                 ; No         ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|src1_2mul[3]  ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; No         ; |Follower|dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|src1_2mul[9]  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: dig_core:iCORE|cmd_cntrl:iCMD ;
++----------------+----------------+------------------------------------------+
+; Parameter Name ; Value          ; Type                                     ;
++----------------+----------------+------------------------------------------+
+; INIT_VALUE     ; 00000000000000 ; Unsigned Binary                          ;
+; EXP_VALUE      ; 11000011010100 ; Unsigned Binary                          ;
++----------------+----------------+------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|lpm_mult:Mult0 ;
++------------------------------------------------+--------------+-------------------------------------------+
+; Parameter Name                                 ; Value        ; Type                                      ;
++------------------------------------------------+--------------+-------------------------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE                            ;
+; LPM_WIDTHA                                     ; 15           ; Untyped                                   ;
+; LPM_WIDTHB                                     ; 15           ; Untyped                                   ;
+; LPM_WIDTHP                                     ; 30           ; Untyped                                   ;
+; LPM_WIDTHR                                     ; 30           ; Untyped                                   ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                                   ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                                   ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                                   ;
+; LATENCY                                        ; 0            ; Untyped                                   ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                                   ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                                   ;
+; USE_EAB                                        ; OFF          ; Untyped                                   ;
+; MAXIMIZE_SPEED                                 ; 5            ; Untyped                                   ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                                   ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                                   ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K                       ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                                   ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                                   ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                                   ;
+; CBXI_PARAMETER                                 ; mult_v5t     ; Untyped                                   ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                                   ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                                   ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                                   ;
++------------------------------------------------+--------------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------+
+; lpm_mult Parameter Settings by Entity Instance                                                   ;
++---------------------------------------+----------------------------------------------------------+
+; Name                                  ; Value                                                    ;
++---------------------------------------+----------------------------------------------------------+
+; Number of entity instances            ; 1                                                        ;
+; Entity Instance                       ; dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|lpm_mult:Mult0 ;
+;     -- LPM_WIDTHA                     ; 15                                                       ;
+;     -- LPM_WIDTHB                     ; 15                                                       ;
+;     -- LPM_WIDTHP                     ; 30                                                       ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                                   ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                                       ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                                       ;
+;     -- USE_EAB                        ; OFF                                                      ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                                     ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                                       ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                                       ;
++---------------------------------------+----------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "A2D_intf:iA2D|SPI_mstr16:iSPI"                                                                 ;
++-----------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port            ; Type   ; Severity ; Details                                                                             ;
++-----------------+--------+----------+-------------------------------------------------------------------------------------+
+; rd_data[15..12] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; cmd[15..14]     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; cmd[10..0]      ; Input  ; Info     ; Stuck at GND                                                                        ;
++-----------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR" ;
++------------+-------+----------+------------------------------------------+
+; Port       ; Type  ; Severity ; Details                                  ;
++------------+-------+----------+------------------------------------------+
+; duty[3..2] ; Input ; Info     ; Stuck at VCC                             ;
+; duty[6..4] ; Input ; Info     ; Stuck at GND                             ;
+; duty[1..0] ; Input ; Info     ; Stuck at GND                             ;
+; duty[7]    ; Input ; Info     ; Stuck at VCC                             ;
++------------+-------+----------+------------------------------------------+
+
+
++-----------------------------------------------------------------------+
+; Port Connectivity Checks: "dig_core:iCORE|motion_cntrl:iMTN|alu:iALU" ;
++---------------+-------+----------+------------------------------------+
+; Port          ; Type  ; Severity ; Details                            ;
++---------------+-------+----------+------------------------------------+
+; Pterm[13..12] ; Input ; Info     ; Stuck at VCC                       ;
+; Pterm[10..9]  ; Input ; Info     ; Stuck at VCC                       ;
+; Pterm[6..0]   ; Input ; Info     ; Stuck at GND                       ;
+; Pterm[11]     ; Input ; Info     ; Stuck at GND                       ;
+; Pterm[8]      ; Input ; Info     ; Stuck at GND                       ;
+; Pterm[7]      ; Input ; Info     ; Stuck at VCC                       ;
+; Iterm[7..0]   ; Input ; Info     ; Stuck at GND                       ;
+; Iterm[11]     ; Input ; Info     ; Stuck at GND                       ;
+; Iterm[10]     ; Input ; Info     ; Stuck at VCC                       ;
+; Iterm[9]      ; Input ; Info     ; Stuck at GND                       ;
+; Iterm[8]      ; Input ; Info     ; Stuck at VCC                       ;
++---------------+-------+----------+------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "dig_core:iCORE"                                                                     ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; go   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 27                          ;
+; cycloneiii_ff         ; 308                         ;
+;     CLR               ; 92                          ;
+;     CLR SCLR          ; 52                          ;
+;     ENA CLR           ; 138                         ;
+;     ENA CLR SCLR      ; 12                          ;
+;     SCLR SLD          ; 5                           ;
+;     plain             ; 9                           ;
+; cycloneiii_io_obuf    ; 1                           ;
+; cycloneiii_lcell_comb ; 606                         ;
+;     arith             ; 121                         ;
+;         2 data inputs ; 104                         ;
+;         3 data inputs ; 17                          ;
+;     normal            ; 485                         ;
+;         0 data inputs ; 1                           ;
+;         1 data inputs ; 35                          ;
+;         2 data inputs ; 32                          ;
+;         3 data inputs ; 64                          ;
+;         4 data inputs ; 353                         ;
+; cycloneiii_mac_mult   ; 1                           ;
+; cycloneiii_mac_out    ; 1                           ;
+;                       ;                             ;
+; Max LUT depth         ; 14.80                       ;
+; Average LUT depth     ; 6.43                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:05     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
+    Info: Processing started: Mon May 01 07:59:42 2017
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Follower -c Follower
+Warning (20028): Parallel compilation is not licensed and has been disabled
+Info (12021): Found 1 design units, including 1 entities, in source file follower.v
+    Info (12023): Found entity 1: Follower File: I:/GitHub/ECE551-Project/follower.v Line: 1
+Warning (12019): Can't analyze file -- file cmd_cntrl.sv is missing
+Info (12021): Found 1 design units, including 1 entities, in source file dig_core.sv
+    Info (12023): Found entity 1: dig_core File: I:/GitHub/ECE551-Project/dig_core.sv Line: 1
+Warning (12019): Can't analyze file -- file UART_rcv.sv is missing
+Warning (12019): Can't analyze file -- file SPI_mstr16.sv is missing
+Warning (12019): Can't analyze file -- file pwm8.sv is missing
+Info (12021): Found 1 design units, including 1 entities, in source file pwm.sv
+    Info (12023): Found entity 1: pwm File: I:/GitHub/ECE551-Project/pwm.sv Line: 1
+Warning (12019): Can't analyze file -- file motor_cntrl.sv is missing
+Info (12021): Found 1 design units, including 1 entities, in source file motion_cntrl.sv
+    Info (12023): Found entity 1: motion_cntrl File: I:/GitHub/ECE551-Project/motion_cntrl.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file barcode.sv
+    Info (12023): Found entity 1: barcode File: I:/GitHub/ECE551-Project/barcode.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file alu.sv
+    Info (12023): Found entity 1: alu File: I:/GitHub/ECE551-Project/alu.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file a2d_intf.sv
+    Info (12023): Found entity 1: A2D_intf File: I:/GitHub/ECE551-Project/A2D_intf.sv Line: 1
+Warning (10236): Verilog HDL Implicit Net warning at follower.v(55): created implicit net for "go" File: I:/GitHub/ECE551-Project/follower.v Line: 55
+Info (12127): Elaborating entity "Follower" for the top level hierarchy
+Info (12128): Elaborating entity "dig_core" for hierarchy "dig_core:iCORE" File: I:/GitHub/ECE551-Project/follower.v Line: 56
+Warning (12125): Using design file cmd_cntrl.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: cmd_cntrl File: I:/GitHub/ECE551-Project/cmd_cntrl.v Line: 1
+Info (12128): Elaborating entity "cmd_cntrl" for hierarchy "dig_core:iCORE|cmd_cntrl:iCMD" File: I:/GitHub/ECE551-Project/dig_core.sv Line: 33
+Info (12128): Elaborating entity "motion_cntrl" for hierarchy "dig_core:iCORE|motion_cntrl:iMTN" File: I:/GitHub/ECE551-Project/dig_core.sv Line: 40
+Warning (10230): Verilog HDL assignment warning at motion_cntrl.sv(323): truncated value with size 32 to match size of target (3) File: I:/GitHub/ECE551-Project/motion_cntrl.sv Line: 323
+Warning (10230): Verilog HDL assignment warning at motion_cntrl.sv(333): truncated value with size 32 to match size of target (2) File: I:/GitHub/ECE551-Project/motion_cntrl.sv Line: 333
+Warning (10230): Verilog HDL assignment warning at motion_cntrl.sv(344): truncated value with size 32 to match size of target (12) File: I:/GitHub/ECE551-Project/motion_cntrl.sv Line: 344
+Warning (10230): Verilog HDL assignment warning at motion_cntrl.sv(355): truncated value with size 32 to match size of target (5) File: I:/GitHub/ECE551-Project/motion_cntrl.sv Line: 355
+Info (12128): Elaborating entity "alu" for hierarchy "dig_core:iCORE|motion_cntrl:iMTN|alu:iALU" File: I:/GitHub/ECE551-Project/motion_cntrl.sv Line: 44
+Warning (12125): Using design file pwm8.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: pwm8 File: I:/GitHub/ECE551-Project/pwm8.v Line: 1
+Info (12128): Elaborating entity "pwm8" for hierarchy "dig_core:iCORE|motion_cntrl:iMTN|pwm8:pwm_IR" File: I:/GitHub/ECE551-Project/motion_cntrl.sv Line: 48
+Warning (10230): Verilog HDL assignment warning at pwm8.v(15): truncated value with size 32 to match size of target (8) File: I:/GitHub/ECE551-Project/pwm8.v Line: 15
+Warning (10230): Verilog HDL assignment warning at pwm8.v(26): truncated value with size 32 to match size of target (1) File: I:/GitHub/ECE551-Project/pwm8.v Line: 26
+Warning (12125): Using design file uart_rcv.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: uart_rcv File: I:/GitHub/ECE551-Project/uart_rcv.v Line: 1
+Info (12128): Elaborating entity "uart_rcv" for hierarchy "uart_rcv:iCMD" File: I:/GitHub/ECE551-Project/follower.v Line: 62
+Warning (10230): Verilog HDL assignment warning at uart_rcv.v(43): truncated value with size 32 to match size of target (12) File: I:/GitHub/ECE551-Project/uart_rcv.v Line: 43
+Warning (10230): Verilog HDL assignment warning at uart_rcv.v(55): truncated value with size 32 to match size of target (4) File: I:/GitHub/ECE551-Project/uart_rcv.v Line: 55
+Warning (12125): Using design file motor_cntrl.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: motor_cntrl File: I:/GitHub/ECE551-Project/motor_cntrl.v Line: 1
+Info (12128): Elaborating entity "motor_cntrl" for hierarchy "motor_cntrl:iMTR" File: I:/GitHub/ECE551-Project/follower.v Line: 68
+Warning (10230): Verilog HDL assignment warning at motor_cntrl.v(15): truncated value with size 32 to match size of target (10) File: I:/GitHub/ECE551-Project/motor_cntrl.v Line: 15
+Warning (10230): Verilog HDL assignment warning at motor_cntrl.v(16): truncated value with size 32 to match size of target (10) File: I:/GitHub/ECE551-Project/motor_cntrl.v Line: 16
+Info (12128): Elaborating entity "pwm" for hierarchy "motor_cntrl:iMTR|pwm:PWM_lft" File: I:/GitHub/ECE551-Project/motor_cntrl.v Line: 9
+Warning (10230): Verilog HDL assignment warning at pwm.sv(15): truncated value with size 32 to match size of target (10) File: I:/GitHub/ECE551-Project/pwm.sv Line: 15
+Warning (10230): Verilog HDL assignment warning at pwm.sv(26): truncated value with size 32 to match size of target (1) File: I:/GitHub/ECE551-Project/pwm.sv Line: 26
+Info (12128): Elaborating entity "barcode" for hierarchy "barcode:iBC" File: I:/GitHub/ECE551-Project/follower.v Line: 74
+Warning (10230): Verilog HDL assignment warning at barcode.sv(33): truncated value with size 32 to match size of target (22) File: I:/GitHub/ECE551-Project/barcode.sv Line: 33
+Warning (10230): Verilog HDL assignment warning at barcode.sv(45): truncated value with size 32 to match size of target (4) File: I:/GitHub/ECE551-Project/barcode.sv Line: 45
+Info (12128): Elaborating entity "A2D_intf" for hierarchy "A2D_intf:iA2D" File: I:/GitHub/ECE551-Project/follower.v Line: 80
+Warning (12125): Using design file spi_mstr16.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: SPI_mstr16 File: I:/GitHub/ECE551-Project/spi_mstr16.v Line: 1
+Info (12128): Elaborating entity "SPI_mstr16" for hierarchy "A2D_intf:iA2D|SPI_mstr16:iSPI" File: I:/GitHub/ECE551-Project/A2D_intf.sv Line: 21
+Warning (10230): Verilog HDL assignment warning at spi_mstr16.v(38): truncated value with size 32 to match size of target (5) File: I:/GitHub/ECE551-Project/spi_mstr16.v Line: 38
+Warning (10230): Verilog HDL assignment warning at spi_mstr16.v(40): truncated value with size 32 to match size of target (5) File: I:/GitHub/ECE551-Project/spi_mstr16.v Line: 40
+Info (278001): Inferred 1 megafunctions from design logic
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|Mult0" File: I:/GitHub/ECE551-Project/alu.sv Line: 60
+Info (12130): Elaborated megafunction instantiation "dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|lpm_mult:Mult0" File: I:/GitHub/ECE551-Project/alu.sv Line: 60
+Info (12133): Instantiated megafunction "dig_core:iCORE|motion_cntrl:iMTN|alu:iALU|lpm_mult:Mult0" with the following parameter: File: I:/GitHub/ECE551-Project/alu.sv Line: 60
+    Info (12134): Parameter "LPM_WIDTHA" = "15"
+    Info (12134): Parameter "LPM_WIDTHB" = "15"
+    Info (12134): Parameter "LPM_WIDTHP" = "30"
+    Info (12134): Parameter "LPM_WIDTHR" = "30"
+    Info (12134): Parameter "LPM_WIDTHS" = "1"
+    Info (12134): Parameter "LPM_REPRESENTATION" = "SIGNED"
+    Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "MAXIMIZE_SPEED" = "5"
+Info (12021): Found 1 design units, including 1 entities, in source file db/mult_v5t.tdf
+    Info (12023): Found entity 1: mult_v5t File: I:/GitHub/ECE551-Project/db/mult_v5t.tdf Line: 29
+Info (13000): Registers with preset signals will power-up high File: I:/GitHub/ECE551-Project/spi_mstr16.v Line: 20
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 8 registers lost all their fanouts during netlist optimizations.
+Info (144001): Generated suppressed messages file I:/GitHub/ECE551-Project/Follower.map.smsg
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 754 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 6 input pins
+    Info (21059): Implemented 21 output pins
+    Info (21061): Implemented 725 logic cells
+    Info (21062): Implemented 2 DSP elements
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 28 warnings
+    Info: Peak virtual memory: 879 megabytes
+    Info: Processing ended: Mon May 01 08:00:14 2017
+    Info: Elapsed time: 00:00:32
+    Info: Total CPU time (on all processors): 00:00:32
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in I:/GitHub/ECE551-Project/Follower.map.smsg.
+
+

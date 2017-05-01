@@ -1,0 +1,13 @@
+
+State Machine - |follower|state
+Name state.00 state.10 state.01 
+state.00 0 0 0 
+state.01 1 0 1 
+state.10 1 1 0 
+
+State Machine - |follower|A2D_intf:iA2D|SPI_mstr16:iSPI|state
+Name state.FINISH state.WAIT state.SHIFTING state.IDLE 
+state.IDLE 0 0 0 0 
+state.SHIFTING 0 0 1 1 
+state.WAIT 0 1 0 1 
+state.FINISH 1 0 0 1 

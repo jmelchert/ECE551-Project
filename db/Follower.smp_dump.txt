@@ -1,0 +1,33 @@
+
+State Machine - |Follower|A2D_intf:iA2D|SPI_mstr16:iSPI|state
+Name state.FINISH state.WAIT state.SHIFTING state.IDLE 
+state.IDLE 0 0 0 0 
+state.SHIFTING 0 0 1 1 
+state.WAIT 0 1 0 1 
+state.FINISH 1 0 0 1 
+
+State Machine - |Follower|barcode:iBC|state
+Name state.WAIT_LOW state.TRANSMIT state.CAPTURE state.IDLE state.WAIT_HIGH 
+state.IDLE 0 0 0 0 0 
+state.CAPTURE 0 0 1 1 0 
+state.TRANSMIT 0 1 0 1 0 
+state.WAIT_LOW 1 0 0 1 0 
+state.WAIT_HIGH 0 0 0 1 1 
+
+State Machine - |Follower|dig_core:iCORE|motion_cntrl:iMTN|state
+Name state.lft_calc state.PI_Accum2_calc state.rht_calc state.PI_Accum_calc state.Pcomp_calc state.Icomp_calc state.Int_calc state.Accum_Calc_2 state.Stall_2 state.A2D_Conv_2 state.Accum_Calc_1 state.Stall_1 state.A2D_Conv_1 state.PWM_IR_sel state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state.PWM_IR_sel 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+state.A2D_Conv_1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+state.Stall_1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+state.Accum_Calc_1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+state.A2D_Conv_2 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+state.Stall_2 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+state.Accum_Calc_2 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+state.Int_calc 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+state.Icomp_calc 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+state.Pcomp_calc 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+state.PI_Accum_calc 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+state.rht_calc 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+state.PI_Accum2_calc 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.lft_calc 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
