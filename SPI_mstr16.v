@@ -49,6 +49,8 @@ always @(posedge clk, negedge rst_n) begin
 		rd_data <= 16'h0000;
 	else if (shift_rx) begin
 		rd_data <= {rd_data[14:0], MISO};
+	end else begin
+		rd_data <= rd_data;
 	end
 end
 
@@ -58,8 +60,10 @@ always @(posedge clk, negedge rst_n) begin
 		shift_reg_tx <= 16'h0000;
 	else if (initialize)
 		shift_reg_tx <= cmd; // initialize the data to be transmitted
-	else if (shift_tx) begin
-		shift_reg_tx <= {shift_reg_tx[14:0], 1'b0};
+	else if (shift_tx) begin 
+		shift_reg_tx <= {shift_reg_tx[14:0], 1'b0}; // Shifts out data being transmitted
+	end else begin
+		shift_reg_tx <= shift_reg_tx;
 	end
 end
 
@@ -92,6 +96,8 @@ always @(*) begin
 	done = 0;
 	nstate = IDLE;	  
 	initialize = 0;
+
+	// signals used to keeping track of when to stop transmitting
 	set_firstTime = 0;
 	reset_firstTime = 0;
 	set_finished = 0;
@@ -152,11 +158,11 @@ always @(*) begin
 
 		FINISH : begin		
 			if (count == 5'h1F || finished) begin
-				// Finished transmitting
 				
+				// Finished transmitting
 				nstate = IDLE;
 				
-				
+				// Need to transmit twice and read twice
 				if (firstTime && !finished) begin
 					reset_firstTime = 1;
 				end else begin
@@ -177,7 +183,7 @@ always @(*) begin
 	endcase
 end
 
-// finished logic
+// finished logic, used to determine when the transaction is done
 always @(posedge clk, negedge rst_n) begin
 	if (!rst_n)
 		finished <= 0;
@@ -189,7 +195,7 @@ always @(posedge clk, negedge rst_n) begin
 		finished <= finished;
 end 
 
-// firstTime logic
+// firstTime logic, used to determine if this is the first time we are transmitting/recieving
 always @(posedge clk, negedge rst_n) begin
 	if (!rst_n)
 		firstTime <= 1;

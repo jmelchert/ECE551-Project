@@ -22,38 +22,38 @@ initial begin
 	#20;
 	rst_n = 1; // Deassert reset
 	
-	#20;
+	#50;
 	cmd_rdy = 1; // cmd_rdy = 1
 	cmd = 8'b01000000; // cmd = go
 	// Should set in_transit to 1, go to state GO
 	// Buzzer should start buzzing when in_transit is 1
 	
-	#20;
+	#50;
 	cmd = 8'h00; // cmd = stop
 	// Should clear in_transit and go to state IDLE
 	
-	#20;
+	#50;
 	cmd = 8'b01000000; // cmd = go
 	// Should set in_transit to 1, go to state GO
 	// Buzzer should start buzzing when in_transit is 1
 	
-	#20;
+	#50;
 	cmd_rdy = 0;
 	// Should branch to check ID_vld
 	
-	#20;
+	#50;
 	ID_vld = 1;
 	// Should next check if ID = dest_ID
 	
-	#5;
+	#10;
 	ID = 8'h00;
 	// Change ID to be equal to dest_ID, should clear in_transit and go to state IDLE
 	
-	#20;
+	#50;
 	$stop;
-	
-	
 
+	// Every path in the command and control flow has been tested
+	
 end
 
 

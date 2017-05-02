@@ -12,6 +12,7 @@ reg [3:0] bit_count;		// 4 bit bit counter
 
 reg RX_sync_0, RX_sync_1;
 
+// Double flop RX signal
 always @ (posedge clk) begin
         RX_sync_0 <= RX;
         RX_sync_1 <= RX_sync_0;

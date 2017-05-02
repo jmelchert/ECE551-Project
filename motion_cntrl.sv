@@ -124,14 +124,17 @@ always_comb begin
 		// Wait for conversion to be complete
 		if (cnv_cmplt == 1) begin
 		
-			
+			// Set ALU signals based on channel number
 			if(channel == 3'd2) begin
 				mult2 = 1;
 			end else if(channel == 3'd4) begin
 				mult4 = 1;
-			end else if(channel != 3'd0) 
+			end else if(channel == 3'd0) begin
+				mult2 = 0;
+				mult4 = 0;
+			end else begin
 				nxt_state = IDLE;
-		
+			end
 			
 			nxt_state = Accum_Calc_1;
 			timer32_en = 1'b1; // Start the 32 bit timer
@@ -171,8 +174,12 @@ always_comb begin
 				mult2 = 1;
 			end else if(channel == 3'd5) begin
 				mult4 = 1;
-			end else if(channel != 3'd1) 
+			end else if(channel == 3'd1) begin
+				mult2 = 0;
+				mult4 = 0;
+			end else begin
 				nxt_state = IDLE;
+			end;
 		
 			
 			nxt_state = Accum_Calc_2;
@@ -201,7 +208,8 @@ always_comb begin
 
 		if (channel == 1 || channel == 3 || channel == 5)
 			inc_channel = 1; // increment channel
-		
+		else 
+			inc_channel = 0;
 		
 	end
 
@@ -366,6 +374,8 @@ always_ff @(posedge clk, negedge rst_n) begin
     Fwd <= 12'b000; // we accelerate from zero on next start.
   else if (dst2Int & ~&Fwd[10:8]) // 43.75% full speed
     Fwd <= Fwd + 1'b1;
+  else 
+  	Fwd <= Fwd;
 end 
 
 // Logic for chnnl assignment
@@ -394,6 +404,8 @@ always_ff @(posedge clk, negedge rst_n) begin
     Intgrl <= 12'h000;
   else if (dst2Int)
     Intgrl <= dst[11:0];
+  else 
+  	Intgrl <= Intgrl;
 end 
 
 // Determining the value of Icomp
@@ -402,6 +414,8 @@ always_ff @(posedge clk, negedge rst_n) begin
     Icomp <= 12'h000;
   else if (dst2Icmp)
     Icomp <= dst[11:0];
+  else
+  	Icomp <= Icomp;
 end 
 
 // Determining the value of Pcomp
@@ -410,6 +424,8 @@ always_ff @(posedge clk, negedge rst_n) begin
     Pcomp <= 12'h000;
   else if (dst2Pcmp)
     Pcomp <= dst[11:0];
+  else
+  	Pcomp <= Pcomp;
 end 
 
 // Determining the value of Error
@@ -418,6 +434,8 @@ always_ff @(posedge clk, negedge rst_n) begin
     Error <= 12'h000;
   else if (dst2Err)
     Error <= dst[11:0];
+  else 
+  	Error <= Error;
 end 
 
 assign LEDs = Error[11:4];
@@ -430,6 +448,8 @@ always_ff @(posedge clk, negedge rst_n) begin
 	Accum <= 16'h000;
   else if (dst2Accum)
     Accum <= dst[15:0];
+  else 
+  	Accum <= Accum;
 end 
 
 // Determining the value of rht_reg
@@ -440,6 +460,8 @@ always_ff @(posedge clk, negedge rst_n) begin
     lft_reg <= 12'h000;
   else if (dst2lft)
     lft_reg <= dst[11:0];
+  else
+  	lft_reg <= lft_reg;
 end 
 
 
@@ -451,8 +473,11 @@ always_ff @(posedge clk, negedge rst_n) begin
     rht_reg <= 12'h000;
   else if (dst2rht)
     rht_reg <= dst[11:0];
+  else
+  	rht_reg <= rht_reg;
 end 
 
+// Assign lft and rht outputs
 assign lft = lft_reg[11:1];
 assign rht = rht_reg[11:1];
 

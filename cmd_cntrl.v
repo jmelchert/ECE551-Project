@@ -46,14 +46,20 @@ always @(posedge clk, negedge rst_n) begin
  	end else begin
 	    if (en) begin // Increase when enabled
 			buzz_cnt <= buzz_cnt + 1'b1;
+		end else begin
+			buzz_cnt <= buzz_cnt;
 		end
+
 		if (buzz_cnt >= EXP_VALUE/2) begin // 50% duty
 	        buzz <= 1'b1;
 	    end else begin
 			buzz <= 1'b0;
 		end
+
    		if (buzz_cnt == EXP_VALUE) begin // Prevent Overflow
 	        buzz_cnt <= INIT_VALUE;
+		end else begin
+			buzz_cnt <= buzz_cnt;
 		end
 	end
 end
@@ -81,7 +87,7 @@ end
 // nxt_state logic
 always @(*) begin
 	
-	// Default output values
+	// Default signal values
 	clr_ID_vld = 0;
 	clr_cmd_rdy = 0;
 	set_in_transit = 0;
