@@ -28,7 +28,7 @@ set prim_inputs [remove_from_collection [all_inputs] [find port clk]]
 ###########
 #Set Drive#
 ###########
-set_driving_cell -lib_cell ND2D2BWP -pin Z -library tcbn40lpbwptc [copy_collection $prim_inputs]
+set_driving_cell -lib_cell ND2D2BWP -library tcbn40lpbwptc [copy_collection $prim_inputs]
 
 ################################
 #Set wireload & transition time#
@@ -45,7 +45,10 @@ set_fix_hold clk
 ####################
 #Compile the Design#
 ####################
-compile_ultra
+
+set_flatten true
+ungroup -all
+compile -map_effort medium
 
 
-write –format verilog follower -output follower.vg
+write -format verilog Follower -output follower.vg
