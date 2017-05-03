@@ -421,9 +421,9 @@ end
 // Determining the value of Pcomp
 always_ff @(posedge clk, negedge rst_n) begin
   if (!rst_n)
-    Pcomp <= 12'h000;
+    Pcomp <= 16'h000;
   else if (dst2Pcmp)
-    Pcomp <= dst[11:0];
+    Pcomp <= dst[15:0];
   else
   	Pcomp <= Pcomp;
 end 
