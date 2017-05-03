@@ -1,4 +1,4 @@
 Info (10281): Verilog HDL Declaration information at follower.v(6): object "RST_n" differs only in case from object "rst_n" in the same scope File: I:/GitHub/ECE551-Project/follower.v Line: 6
 Info (10281): Verilog HDL Declaration information at cmd_cntrl.v(6): object "go" differs only in case from object "GO" in the same scope File: I:/GitHub/ECE551-Project/cmd_cntrl.v Line: 6
-Info (10281): Verilog HDL Declaration information at motor_cntrl.v(7): object "pwm_lft" differs only in case from object "PWM_lft" in the same scope File: I:/GitHub/ECE551-Project/motor_cntrl.v Line: 7
-Info (10281): Verilog HDL Declaration information at motor_cntrl.v(7): object "pwm_rht" differs only in case from object "PWM_rht" in the same scope File: I:/GitHub/ECE551-Project/motor_cntrl.v Line: 7
+Info (10281): Verilog HDL Declaration information at motor_cntrl.v(14): object "pwm_lft" differs only in case from object "PWM_lft" in the same scope File: I:/GitHub/ECE551-Project/motor_cntrl.v Line: 14
+Info (10281): Verilog HDL Declaration information at motor_cntrl.v(14): object "pwm_rht" differs only in case from object "PWM_rht" in the same scope File: I:/GitHub/ECE551-Project/motor_cntrl.v Line: 14

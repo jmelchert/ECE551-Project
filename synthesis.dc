@@ -46,9 +46,8 @@ set_fix_hold clk
 #Compile the Design#
 ####################
 
-set_flatten true
-ungroup -all
-compile_ultra
+ungroup -all -flatten
+compile -map_effort high
 
 
 write -format verilog Follower -output follower.vg

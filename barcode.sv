@@ -3,8 +3,8 @@ module barcode(clk, rst_n, BC, ID_vld, ID, clr_ID_vld);
 input BC, clr_ID_vld, clk, rst_n; 
 output reg ID_vld;
 output reg[7:0] ID; // Output ID
-reg[21:0] counter; // 22 bit counter for timing
-reg[21:0] timer;   // Timer value for period calculation
+reg[24:0] counter; // 22 bit counter for timing
+reg[24:0] timer;   // Timer value for period calculation
 reg[7:0] ID_inter; // ID value used in shifting
 reg [3:0] shift_cnt; // number of bits shifted
 
@@ -19,14 +19,14 @@ state_t state, nxt_state;
 // 22 bit counter for BIT transmission
 always@(posedge clk, negedge rst_n) begin
 	if(!rst_n) begin  //reset entire counter
-		counter <= 22'd0;
+		counter <= 25'd0;
 		shift <= 0;
 	end else if (cnt_rst) begin //reset entire counter if cnt_rst signal asserted
-		counter <= 22'd0;
+		counter <= 25'd0;
 		shift <= 0;
 	end	else begin
 		if(counter == timer) begin 
-		   counter <= 22'd0; // reset counter now
+		   counter <= 25'd0; // reset counter now
  		   shift <= 1; // when counter is ready shift
 		end else begin
 			shift <= 0;
@@ -78,9 +78,9 @@ end
 // Timer register
 always@(posedge clk, negedge rst_n) begin
 	if(!rst_n)
-		timer <= 22'b1111111111111111111111; // Reset to max value 
+		timer <= 25'b1111111111111111111111111; // Reset to max value 
 	else if (clr_ID_vld)
-		timer <= 22'b1111111111111111111111; // Reset to max value
+		timer <= 25'b1111111111111111111111111; // Reset to max value
 	else if (update_timer) 
 		timer <= counter; // Calculate period
 	else

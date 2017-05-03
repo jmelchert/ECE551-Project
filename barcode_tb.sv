@@ -3,7 +3,7 @@ module barcode_tb();
 // regular input and output validations for testbench
 
 reg clk,rst_n, clr_ID_vld;				
-reg [21:0] period;		
+reg [24:0] period;		
 reg send;				
 reg [7:0] station_ID;	
 wire BC;			
@@ -102,7 +102,7 @@ repeat(1)
 @ (negedge clk);
 send = 0;
 clr_ID_vld = 0;
-period = 22'd1024; // Period is the same this time
+period = 25'hFFFFFFF; // Period is the same this time
 
 // wait for some long time
 repeat (10000) begin

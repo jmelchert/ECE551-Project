@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module Follower_tb();
 
 reg clk,rst_n;			// 50MHz clock and active low aysnch reset
