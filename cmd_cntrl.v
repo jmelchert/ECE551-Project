@@ -3,8 +3,8 @@ module cmd_cntrl(clk, rst_n, cmd, cmd_rdy, clr_cmd_rdy, in_transit, OK2Move, go,
 input [7:0] cmd; // 8 Bit input command
 input [7:0] ID; // ID 8 bit input
 input cmd_rdy, OK2Move, ID_vld, clk, rst_n; // Inputs for clk, rst, and ready signals
-output reg clr_cmd_rdy, in_transit, go, buzz, clr_ID_vld; // Ouputs
-output buzz_n;
+output reg clr_cmd_rdy, in_transit, go, clr_ID_vld; // Ouputs
+output buzz, buzz_n;
 
 // Registers for internal signals
 reg en, rst_in_transit, set_in_transit;
@@ -41,30 +41,24 @@ end
 always @(posedge clk, negedge rst_n) begin
 
 	if (!rst_n) begin
- 	   buzz <= 1'b0; 
 	   buzz_cnt <= INIT_VALUE; // Initial value = 0;
  	end else begin
 	    if (en) begin // Increase when enabled
-			buzz_cnt <= buzz_cnt + 1'b1;
-		end else begin
-			buzz_cnt <= buzz_cnt;
-		end
 
-		if (buzz_cnt >= EXP_VALUE/2) begin // 50% duty
-	        buzz <= 1'b1;
-	    end else begin
-			buzz <= 1'b0;
-		end
-
-   		if (buzz_cnt == EXP_VALUE) begin // Prevent Overflow
-	        buzz_cnt <= INIT_VALUE;
+			if (buzz_cnt == EXP_VALUE) begin // Prevent Overflow
+		        buzz_cnt <= INIT_VALUE;
+			end else begin
+				buzz_cnt <= buzz_cnt + 1'b1;
+			end
+			
 		end else begin
-			buzz_cnt <= buzz_cnt;
-		end
+			buzz_cnt <= 0;
+		end 		
 	end
 end
 
-// Assign bzz_n to the inverse of buzz
+// Assign buzz and bzz_n to the inverse of buzz
+assign buzz = (buzz_cnt >= EXP_VALUE/2) ? 1 : 0;
 assign buzz_n = (en)? ~buzz : buzz; // Inversion only when enabled to vibrate.
 
 

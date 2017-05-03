@@ -1,4 +1,23 @@
-F:/Documents/GitHub/ECE551-Project/duty_meas.v {1 {vlog -work work -stats=none F:/Documents/GitHub/ECE551-Project/duty_meas.v
+F:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower.vg {1 {vlog -work work -stats=none F:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower.vg
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Follower_DW01_inc_2
+-- Compiling module Follower_DW01_inc_3
+-- Compiling module Follower_DW01_inc_4
+-- Compiling module Follower_DW01_inc_5
+-- Compiling module Follower_DW01_inc_6
+-- Compiling module Follower_DW01_inc_7
+-- Compiling module Follower_DW01_inc_8
+-- Compiling module Follower_DW01_add_0
+-- Compiling module Follower_DW01_inc_9
+-- Compiling module Follower_DW01_inc_11
+-- Compiling module Follower_DW01_add_2
+-- Compiling module Follower_DW02_mult_0
+-- Compiling module Follower
+
+Top level modules:
+	Follower
+
+} {} {}} F:/Documents/GitHub/ECE551-Project/duty_meas.v {1 {vlog -work work -stats=none F:/Documents/GitHub/ECE551-Project/duty_meas.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module duty_meas
 
