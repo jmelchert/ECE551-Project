@@ -1,0 +1,100 @@
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : Follower
+Version: L-2016.03
+Date   : Tue May  2 23:08:13 2017
+****************************************
+
+Operating Conditions: NCCOM   Library: tcbn40lpbwptc
+Wire Load Model Mode: segmented
+
+  Startpoint: iCORE/iMTN/state_reg[3]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: iCORE/iMTN/Pcomp_reg[3]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Follower           TSMC32K_Lowk_Conservative
+                                           tcbn40lpbwptc
+  Follower_DW02_mult_0
+                     ZeroWireload          tcbn40lpbwptc
+  Follower_DW01_add_2
+                     ZeroWireload          tcbn40lpbwptc
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  iCORE/iMTN/state_reg[3]/CP (DFCND4BWP)                  0.00       0.00 r
+  iCORE/iMTN/state_reg[3]/Q (DFCND4BWP)                   0.14       0.14 r
+  U798/ZN (INVD4BWP)                                      0.02       0.17 f
+  U819/ZN (ND2D3BWP)                                      0.03       0.19 r
+  U782/ZN (CKND6BWP)                                      0.02       0.21 f
+  U971/Z (AO33D1BWP)                                      0.10       0.31 f
+  U797/ZN (ND2D2BWP)                                      0.02       0.33 r
+  U791/ZN (ND2D3BWP)                                      0.02       0.35 f
+  U804/ZN (ND2D4BWP)                                      0.03       0.38 r
+  U950/ZN (AOI32XD4BWP)                                   0.04       0.42 f
+  U902/ZN (XNR2D2BWP)                                     0.10       0.52 r
+  iCORE/iMTN/iALU/mult_60/A[1] (Follower_DW02_mult_0)     0.00       0.52 r
+  iCORE/iMTN/iALU/mult_60/U58/Z (CKAN2D1BWP)              0.06       0.58 r
+  iCORE/iMTN/iALU/mult_60/U194/Z (XOR2D1BWP)              0.08       0.66 f
+  iCORE/iMTN/iALU/mult_60/S2_2_7/CO (FA1D1BWP)            0.06       0.73 f
+  iCORE/iMTN/iALU/mult_60/S2_3_7/CO (FA1D1BWP)            0.12       0.85 f
+  iCORE/iMTN/iALU/mult_60/S2_4_7/CO (FA1D1BWP)            0.12       0.97 f
+  iCORE/iMTN/iALU/mult_60/U267/Z (XOR3D2BWP)              0.12       1.09 f
+  iCORE/iMTN/iALU/mult_60/U248/ZN (ND2D1BWP)              0.03       1.12 r
+  iCORE/iMTN/iALU/mult_60/U244/ZN (ND3D3BWP)              0.03       1.16 f
+  iCORE/iMTN/iALU/mult_60/S2_7_6/CO (FA1D4BWP)            0.12       1.28 f
+  iCORE/iMTN/iALU/mult_60/S2_8_6/CO (FA1D1BWP)            0.12       1.40 f
+  iCORE/iMTN/iALU/mult_60/U209/ZN (ND2D1BWP)              0.03       1.43 r
+  iCORE/iMTN/iALU/mult_60/U206/ZN (ND3D3BWP)              0.03       1.46 f
+  iCORE/iMTN/iALU/mult_60/S2_10_6/CO (FA1D1BWP)           0.12       1.58 f
+  iCORE/iMTN/iALU/mult_60/S2_11_6/S (FA1D1BWP)            0.12       1.70 r
+  iCORE/iMTN/iALU/mult_60/S2_12_5/S (FA1D1BWP)            0.08       1.78 f
+  iCORE/iMTN/iALU/mult_60/S2_13_4/S (FA1D1BWP)            0.12       1.90 r
+  iCORE/iMTN/iALU/mult_60/S4_3/CO (FA1D1BWP)              0.11       2.01 r
+  iCORE/iMTN/iALU/mult_60/U262/Z (XOR2D2BWP)              0.10       2.11 f
+  iCORE/iMTN/iALU/mult_60/FS_1/A[16] (Follower_DW01_add_2)
+                                                          0.00       2.11 f
+  iCORE/iMTN/iALU/mult_60/FS_1/U5/ZN (CKND2D2BWP)         0.03       2.13 r
+  iCORE/iMTN/iALU/mult_60/FS_1/U71/ZN (OAI21D2BWP)        0.03       2.17 f
+  iCORE/iMTN/iALU/mult_60/FS_1/U33/ZN (AOI211XD2BWP)      0.06       2.23 r
+  iCORE/iMTN/iALU/mult_60/FS_1/U48/ZN (OAI21D4BWP)        0.03       2.26 f
+  iCORE/iMTN/iALU/mult_60/FS_1/U44/ZN (AOI21D2BWP)        0.03       2.29 r
+  iCORE/iMTN/iALU/mult_60/FS_1/U45/ZN (XNR2D2BWP)         0.09       2.39 f
+  iCORE/iMTN/iALU/mult_60/FS_1/SUM[25] (Follower_DW01_add_2)
+                                                          0.00       2.39 f
+  iCORE/iMTN/iALU/mult_60/PRODUCT[27] (Follower_DW02_mult_0)
+                                                          0.00       2.39 f
+  U941/ZN (NR3D4BWP)                                      0.05       2.43 r
+  U931/ZN (OAI21D4BWP)                                    0.03       2.47 f
+  U779/ZN (CKND6BWP)                                      0.03       2.50 r
+  U1168/ZN (IOA21D2BWP)                                   0.03       2.52 f
+  U1015/Z (AO31D4BWP)                                     0.09       2.61 f
+  U1029/Z (MUX2D1BWP)                                     0.06       2.67 f
+  iCORE/iMTN/Pcomp_reg[3]/D (DFCND1BWP)                   0.00       2.67 f
+  data arrival time                                                  2.67
+
+  clock clk (rise edge)                                   2.50       2.50
+  clock network delay (ideal)                             0.00       2.50
+  clock uncertainty                                      -0.10       2.40
+  iCORE/iMTN/Pcomp_reg[3]/CP (DFCND1BWP)                  0.00       2.40 r
+  library setup time                                     -0.01       2.39
+  data required time                                                 2.39
+  --------------------------------------------------------------------------
+  data required time                                                 2.39
+  data arrival time                                                 -2.67
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -0.28
+
+
+1

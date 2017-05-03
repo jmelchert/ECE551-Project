@@ -27,17 +27,35 @@ initial begin
 	cmd = 8'b01000000; // cmd = go
 	// Should set in_transit to 1, go to state GO
 	// Buzzer should start buzzing when in_transit is 1
+	#25;
 	
-	#50;
+	if (!in_transit)begin
+	  $display("ERROR: in_transit should be high");
+	  $stop;
+	end
+
+	#25;
 	cmd = 8'h00; // cmd = stop
 	// Should clear in_transit and go to state IDLE
-	
-	#50;
+	#25;
+
+	if (in_transit)begin
+	  $display("ERROR: in_transit should be low");
+	  $stop;
+	end
+
+	#25;
 	cmd = 8'b01000000; // cmd = go
 	// Should set in_transit to 1, go to state GO
 	// Buzzer should start buzzing when in_transit is 1
+	#25;
 	
-	#50;
+	if (!in_transit)begin
+	  $display("ERROR: in_transit should be high");
+	  $stop;
+	end
+
+	#25;
 	cmd_rdy = 0;
 	// Should branch to check ID_vld
 	
@@ -50,6 +68,13 @@ initial begin
 	// Change ID to be equal to dest_ID, should clear in_transit and go to state IDLE
 	
 	#50;
+
+	if (in_transit)begin
+	  $display("ERROR: in_transit should be low");
+	  $stop;
+	end
+
+  	$display("Passed cmd_control_tb!");
 	$stop;
 
 	// Every path in the command and control flow has been tested

@@ -32,17 +32,35 @@ initial begin
   lft = 11'b10000000000;
   rht = 11'b01111111111;
   repeat (1300) @(posedge clk);
+  
+  if (fwd_lft & rev_rht & ~fwd_rht & ~rev_lft) begin
+    $display("ERROR: Should be full right turn now");
+    $stop;
+  end
+
 
   // Full Reverse rht, full forware lft
   lft = 11'b01111111111;
   rht = 11'b10000000000;
   repeat (1300) @(posedge clk);
 
+  if (~(fwd_lft & rev_rht & ~fwd_rht & ~rev_lft)) begin
+    $display("ERROR: Should be full left turn now");
+    $stop;
+   end
+
 
   // Brake case
   lft = 0;
   rht = 0;
   repeat (1300) @(posedge clk);
+  
+  if (~(rev_rht & fwd_rht & rev_lft & fwd_lft)) begin
+    $display("ERROR: Should be in braking mode");
+    $stop;
+  end
+
+  $display("Passed motor_cntrl_tb!");
   $stop;
 
 end

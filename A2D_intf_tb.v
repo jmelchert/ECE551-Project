@@ -28,8 +28,14 @@ initial begin
 	strt_cnv = 1; // start conversion
 	#10;
 	strt_cnv = 0; // Output should be 16'hf18, the inverse of 16'h00E7
-	#5600
-	
+	#5600;
+
+	if (res != 12'hf18)begin
+	  $display("ERROR: res should be 12'hf18");
+	  $stop;
+	end
+
+	#2000;	
 	rst_n = 0; // Have to reset because ptr signal in the ADC slave will count up but there is no information in analog.dat at that location
 	chnnl = 3'b001;
 	#20;
@@ -45,7 +51,14 @@ initial begin
 	strt_cnv = 1; // start conversion
 	#10;
 	strt_cnv = 0; // Output should be 16'hffa, the inverse of 16'h0005
-	#5600
+	#5600;
+
+	if (res != 12'hffa)begin
+	  $display("ERROR: res should be 12'hffa");
+	  $stop;
+	end
+
+	$display("Passed A2D_intf_tb!");
 	$stop;
 end
 

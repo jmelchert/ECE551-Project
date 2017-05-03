@@ -41,8 +41,14 @@ initial begin
 	RX = 0;
 	#26040;
 	RX = 1; // Stop bit, rx_data should be 0x4D, rx_rdy should go high 
-	#40000;
+	#20000;
 
+ 	if (rx_data != 8'h4D)begin
+	  $display("ERROR: rx_data should be 0x4D");
+	  $stop;
+	end
+
+	#20000;
 	RX = 0; // Start second UART transfer, send data 0x0F
 	#26040;
 	RX = 1;
@@ -65,6 +71,13 @@ initial begin
 	#40000;
 	rx_rdy_clr = 1; // Clear rx_rdy, rx_rdy should go low
 	#25000;
+
+	if (rx_data != 8'h0F)begin
+	  $display("ERROR: rx_data should be 0x0F");
+	  $stop;
+	end
+
+	$display("UART_tb passed!");
 	$stop;
 	
 end

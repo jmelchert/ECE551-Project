@@ -10,7 +10,7 @@ cModel Technology
 dC:/Users/Jack/OneDrive/Sophmore/Modelsim/ex12
 vADC128S
 Z0 DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
-Z1 !s110 1493656141
+Z1 !s110 1493828807
 !i10b 1
 !s100 A0Uhj_lB_Vl]HM<2?[FYo2
 I4N64]Mz22g0D0WgONa0jh1
@@ -26,7 +26,7 @@ Z4 OP;L;10.4a;61
 r1
 !s85 0
 31
-Z5 !s108 1493656141.000000
+Z5 !s108 1493828807.000000
 !s107 F:/Documents/GitHub/ECE551-Project/ADC128S.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|F:/Documents/GitHub/ECE551-Project/ADC128S.sv|
 !s101 -O0
@@ -75,14 +75,14 @@ R4
 r1
 !s85 0
 31
-Z10 !s108 1493656140.000000
+R5
 !s107 F:/Documents/GitHub/ECE551-Project/barcode_mimic.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|F:/Documents/GitHub/ECE551-Project/barcode_mimic.sv|
 !s101 -O0
 !i113 1
 R6
 vbuzz_counter
-Z11 !s110 1493656140
+R1
 !i10b 1
 !s100 ]`Sgj?z:769LiYji_ODmc2
 I2jGh4NVdm83X3XI2VL`Ro2
@@ -96,14 +96,14 @@ R4
 r1
 !s85 0
 31
-R10
+Z10 !s108 1493828806.000000
 !s107 F:/Documents/GitHub/ECE551-Project/buzz_cntr.v|
 !s90 -reportprogress|300|-work|work|-stats=none|F:/Documents/GitHub/ECE551-Project/buzz_cntr.v|
 !s101 -O0
 !i113 1
-Z12 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+Z11 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
 vcmd_cntrl
-Z13 !s110 1493583180
+Z12 !s110 1493583180
 !i10b 1
 !s100 aFj_YC8^D4SWg<Mbg6?<A3
 IYS2K<PS]bM@UD^[OhX8CW1
@@ -117,14 +117,14 @@ R4
 r1
 !s85 0
 31
-Z14 !s108 1493583180.000000
+Z13 !s108 1493583180.000000
 !s107 F:/Documents/GitHub/ECE551-Project/cmd_cntrl.v|
 !s90 -reportprogress|300|-work|work|-stats=none|F:/Documents/GitHub/ECE551-Project/cmd_cntrl.v|
 !s101 -O0
 !i113 1
-R12
-vduty_meas
 R11
+vduty_meas
+!s110 1493828806
 !i10b 1
 !s100 OIVAW7b8^ThbcSU1`g@]?0
 IWC7FMU<fK^oPgY^VJUR]]0
@@ -143,125 +143,345 @@ R10
 !s90 -reportprogress|300|-work|work|-stats=none|F:/Documents/GitHub/ECE551-Project/duty_meas.v|
 !s101 -O0
 !i113 1
-R12
+R11
 vFollower
 R1
 !i10b 1
-!s100 iY3G^6Ed=a[OfiLR8CbRA0
-Ie[YXHDP:3E:hzW^YM_a4c1
+!s100 DhXfG51ORnobUhMz;[90`0
+I]S;<m`fOKVJOfc=c:2Ao?1
 R2
 R3
-Z15 w1493583177
-Z16 8F:\Documents\GitHub\ECE551-Project\Post_Synthesis\follower.vg
-Z17 FF:\Documents\GitHub\ECE551-Project\Post_Synthesis\follower.vg
-L0 98
+Z14 w1493828803
+Z15 8F:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower.vg
+Z16 FF:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower.vg
+L0 1776
 R4
 r1
 !s85 0
 31
 R5
-Z18 !s107 F:\Documents\GitHub\ECE551-Project\Post_Synthesis\follower.vg|
-Z19 !s90 -reportprogress|300|-work|work|-stats=none|F:\Documents\GitHub\ECE551-Project\Post_Synthesis\follower.vg|
+Z17 !s107 F:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower.vg|
+Z18 !s90 -reportprogress|300|-work|work|-stats=none|F:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower.vg|
 !s101 -O0
 !i113 1
-R12
+R11
 n@follower
-vFollower_DW01_inc_0
+vFollower_DW01_add_0
 R1
 !i10b 1
-!s100 RA3[Gn9]X23_ac`>?gRio0
-Ii88>Tk=TSoljAZ90?a6S13
+!s100 E0]]<Vi@33`5Eo=7@P]3?2
+Iz]ldIz=z]YVkLA5lhDaf?2
 R2
 R3
+R14
 R15
 R16
-R17
-L0 8
+L0 154
 R4
 r1
 !s85 0
 31
 R5
+R17
 R18
-R19
 !s101 -O0
 !i113 1
-R12
+R11
+n@follower_@d@w01_add_0
+vFollower_DW01_add_2
+R1
+!i10b 1
+!s100 QNWTaB6m9=ASJej9oJZK>3
+Ih^6F[VUPN0k3`d8NQz2eP2
+R2
+R3
+R14
+R15
+R16
+L0 237
+R4
+r1
+!s85 0
+31
+R5
+R17
+R18
+!s101 -O0
+!i113 1
+R11
+n@follower_@d@w01_add_2
+vFollower_DW01_inc_0
+Z19 !s110 1493828061
+!i10b 1
+!s100 V:ERnzTGnSR[`Ph[;a6BM1
+IZMeclSH5`_45:BgHU<dT;1
+R2
+R3
+Z20 w1493785874
+R15
+R16
+L0 9
+R4
+r1
+!s85 0
+31
+Z21 !s108 1493828061.000000
+R17
+R18
+!s101 -O0
+!i113 1
+R11
 n@follower_@d@w01_inc_0
 vFollower_DW01_inc_1
-R1
+R19
 !i10b 1
-!s100 LamJOmlUJmHW5<I[B3?7J0
-IPoMiI6BdNUe1J2GG4i8570
+!s100 7N:Rn0S2[>7eW=SUSH?Bh0
+IfSzKYXRF5J1;UJZ]=?D;62
 R2
 R3
+R20
 R15
 R16
+Z22 L0 40
+R4
+r1
+!s85 0
+31
+R21
 R17
-L0 39
+R18
+!s101 -O0
+!i113 1
+R11
+n@follower_@d@w01_inc_1
+vFollower_DW01_inc_11
+R1
+!i10b 1
+!s100 ]@YHV`C5`okVifHZ4;fEm2
+I2:>AeQ>FjN[7AzgFTA8?50
+R2
+R3
+R14
+R15
+R16
+L0 216
 R4
 r1
 !s85 0
 31
 R5
+R17
 R18
-R19
 !s101 -O0
 !i113 1
-R12
-n@follower_@d@w01_inc_1
+R11
+n@follower_@d@w01_inc_11
 vFollower_DW01_inc_2
 R1
 !i10b 1
-!s100 >F@zMjR?gBko51ZjTVzL92
-IJ_HQIHc=KNO10Y=aGADZn0
+!s100 ^jA<>_MZWBc2PH0lBlH6D2
+IEf03fC8GfQc`W3W36MjAI2
 R2
 R3
+R14
 R15
 R16
-R17
-L0 58
+L0 9
 R4
 r1
 !s85 0
 31
 R5
+R17
 R18
-R19
 !s101 -O0
 !i113 1
-R12
+R11
 n@follower_@d@w01_inc_2
 vFollower_DW01_inc_3
 R1
 !i10b 1
-!s100 X]]UTSkXl0_0g?dC7VITn0
-Ik]Tl6:4higi:Zejb]_dT80
+!s100 ajzKbT3j2PT7BPUU]`4dF2
+I1mU;TW;H:eej^gPdZC>zR1
 R2
 R3
+R14
 R15
 R16
-R17
-L0 77
+R22
 R4
 r1
 !s85 0
 31
 R5
+R17
 R18
-R19
 !s101 -O0
 !i113 1
-R12
-n@follower_@d@w01_inc_3
-vFollower_tb
 R11
+n@follower_@d@w01_inc_3
+vFollower_DW01_inc_4
+R1
 !i10b 1
-!s100 7AO[67h:mD2HU><NJb^Hd1
-IUAY^cc`RG_l8;HLzN<M<52
+!s100 NFRnVVPF0^?_kof`WbkU>3
+IEm^o`Kl][dZMODGcdXK?62
 R2
 R3
-w1493580427
+R14
+R15
+R16
+L0 59
+R4
+r1
+!s85 0
+31
+R5
+R17
+R18
+!s101 -O0
+!i113 1
+R11
+n@follower_@d@w01_inc_4
+vFollower_DW01_inc_5
+R1
+!i10b 1
+!s100 SKJOeZK>iSEGNo7G`_RU03
+IGZd?]0bn9FLWn>RV2;iC?3
+R2
+R3
+R14
+R15
+R16
+L0 78
+R4
+r1
+!s85 0
+31
+R5
+R17
+R18
+!s101 -O0
+!i113 1
+R11
+n@follower_@d@w01_inc_5
+vFollower_DW01_inc_6
+R1
+!i10b 1
+!s100 fCgmgNFicU_KXlfgo?HY42
+IkmCT6e2A95Bf]hAA:GGdA0
+R2
+R3
+R14
+R15
+R16
+L0 97
+R4
+r1
+!s85 0
+31
+R5
+R17
+R18
+!s101 -O0
+!i113 1
+R11
+n@follower_@d@w01_inc_6
+vFollower_DW01_inc_7
+R1
+!i10b 1
+!s100 PS6M>M4DOTA6N4bD`ec@d2
+IcW`Z_e1VPa5RBInalBLM`1
+R2
+R3
+R14
+R15
+R16
+L0 116
+R4
+r1
+!s85 0
+31
+R5
+R17
+R18
+!s101 -O0
+!i113 1
+R11
+n@follower_@d@w01_inc_7
+vFollower_DW01_inc_8
+R1
+!i10b 1
+!s100 O2ZK:4Gg:kN>=gmXGnOAc3
+I^_ZHgb^onoI2YkVZWGN_E1
+R2
+R3
+R14
+R15
+R16
+L0 137
+R4
+r1
+!s85 0
+31
+R5
+R17
+R18
+!s101 -O0
+!i113 1
+R11
+n@follower_@d@w01_inc_8
+vFollower_DW01_inc_9
+R1
+!i10b 1
+!s100 GUOSARf5_LM[UCe5`mhbU0
+IUij08gO4dN>f[di>ASY_O3
+R2
+R3
+R14
+R15
+R16
+L0 195
+R4
+r1
+!s85 0
+31
+R5
+R17
+R18
+!s101 -O0
+!i113 1
+R11
+n@follower_@d@w01_inc_9
+vFollower_DW02_mult_0
+R1
+!i10b 1
+!s100 W]:S;NFWica6M>][gPiMP0
+IQVSiAg5]8R03CDGbZgMhW0
+R2
+R3
+R14
+R15
+R16
+L0 438
+R4
+r1
+!s85 0
+31
+R5
+R17
+R18
+!s101 -O0
+!i113 1
+R11
+n@follower_@d@w02_mult_0
+vFollower_tb
+R1
+!i10b 1
+!s100 cgID4dC:=BE3UHd28bLkc2
+I@e2:>`HAd1T0P]^EzL93o3
+R2
+R3
+w1493785188
 8F:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower_tb.v
 FF:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower_tb.v
 L0 2
@@ -269,12 +489,12 @@ R4
 r1
 !s85 0
 31
-R10
+R5
 !s107 F:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower_tb.v|
 !s90 -reportprogress|300|-work|work|-stats=none|F:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower_tb.v|
 !s101 -O0
 !i113 1
-R12
+R11
 n@follower_tb
 vmotion_cntrl
 R0
@@ -294,7 +514,7 @@ R4
 r1
 !s85 0
 31
-R14
+R13
 !s107 F:/Documents/GitHub/ECE551-Project/motion_cntrl.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|F:/Documents/GitHub/ECE551-Project/motion_cntrl.sv|
 !s101 -O0
@@ -344,9 +564,9 @@ R8
 !s90 -reportprogress|300|-work|work|-stats=none|F:/Documents/GitHub/ECE551-Project/pwm8.v|
 !s101 -O0
 !i113 1
-R12
+R11
 vSPI_mstr16
-R13
+R12
 !i10b 1
 !s100 oi^NG6=Y?MIQZ59OWb?3n0
 IJ?JJ`88d[hNKPNlGjh66X2
@@ -360,12 +580,12 @@ R4
 r1
 !s85 0
 31
-R14
+R13
 !s107 F:/Documents/GitHub/ECE551-Project/SPI_mstr16.v|
 !s90 -reportprogress|300|-work|work|-stats=none|F:/Documents/GitHub/ECE551-Project/SPI_mstr16.v|
 !s101 -O0
 !i113 1
-R12
+R11
 n@s@p@i_mstr16
 vuart_tx
 R0

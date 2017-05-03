@@ -5,16 +5,19 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	duty_meas
 
-} {} {}} F:/Documents/GitHub/ECE551-Project/Post_Synthesis/follower.vg {1 {vlog -work work -stats=none {F:\Documents\GitHub\ECE551-Project\Post_Synthesis\follower.vg}
+} {} {}} F:/Documents/GitHub/ECE551-Project/buzz_cntr.v {1 {vlog -work work -stats=none F:/Documents/GitHub/ECE551-Project/buzz_cntr.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module Follower_DW01_inc_0
--- Compiling module Follower_DW01_inc_1
--- Compiling module Follower_DW01_inc_2
--- Compiling module Follower_DW01_inc_3
--- Compiling module Follower
+-- Compiling module buzz_counter
 
 Top level modules:
-	Follower
+	buzz_counter
+
+} {} {}} F:/Documents/GitHub/ECE551-Project/ADC128S.sv {1 {vlog -work work -sv -stats=none F:/Documents/GitHub/ECE551-Project/ADC128S.sv
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ADC128S
+
+Top level modules:
+	ADC128S
 
 } {} {}} F:/Documents/GitHub/ECE551-Project/barcode_mimic.sv {1 {vlog -work work -sv -stats=none F:/Documents/GitHub/ECE551-Project/barcode_mimic.sv
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
@@ -29,20 +32,6 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 
 Top level modules:
 	Follower_tb
-
-} {} {}} F:/Documents/GitHub/ECE551-Project/ADC128S.sv {1 {vlog -work work -sv -stats=none F:/Documents/GitHub/ECE551-Project/ADC128S.sv
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module ADC128S
-
-Top level modules:
-	ADC128S
-
-} {} {}} F:/Documents/GitHub/ECE551-Project/buzz_cntr.v {1 {vlog -work work -stats=none F:/Documents/GitHub/ECE551-Project/buzz_cntr.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module buzz_counter
-
-Top level modules:
-	buzz_counter
 
 } {} {}} F:/Documents/GitHub/ECE551-Project/UART_tx.sv {1 {vlog -work work -sv -stats=none F:/Documents/GitHub/ECE551-Project/UART_tx.sv
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015

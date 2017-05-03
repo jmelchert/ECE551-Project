@@ -20,6 +20,16 @@ always #5 clk = ~clk;
 
 initial begin
 
+	#240000;
+	if (lft != 11'h3ff) begin
+	  	$display("ERROR: robot should be in full left turn");
+		$stop;
+	end
+
+end
+
+initial begin
+
 	// Initially reset
     clk = 0;
     go = 1;
@@ -41,12 +51,13 @@ initial begin
 	cnv_cmplt = 0;
 	
 	repeat(200) @(posedge clk); // Wait for 32 bit timer, start conversion after this
+	A2D_res = 12'h000; // Now set A2D_res to 0, this should cause Accum to change to fff and the robot to go into full left turn
 	#5;
 	cnv_cmplt = 1; // Should perform Accum calculations
 	
 	#20;
 	cnv_cmplt = 0;
-
+	A2D_res = 12'hFFF;
 	// Repeat this same process until all 6 channels have been read and the PI control math has been done
 	// At the end of this loop FWD should be calculated once and should be 1
 	for (loop = 0; loop < 12; loop = loop + 1) begin
@@ -69,7 +80,13 @@ initial begin
 	
 	// PI math should be computed once, all channels should have been read
 	// All ALU registers should still be 0 but FWD should be 1
+
+	if (lft != 11'h000) begin
+	  $display("ERROR: lft should be 0");
+	  $stop;
+	end
 	
+	$display("Passed motion control tb!");
 	$stop;
 
 end

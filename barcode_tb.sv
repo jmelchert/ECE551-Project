@@ -44,6 +44,12 @@ repeat (10000) begin
 @ (negedge clk);
 end
 
+ 	if (ID != 8'h37 || ID_vld == 0)begin
+	  $display("ERROR: ID should be 0x37 and ID_vld should be 1");
+	  $stop;
+	end
+
+
 station_ID = 8'hc5; // THIS TIME ID IS INVALID!!! EXPECT: ID_vld to be low at the end and ID = 8'h37 still
 clr_ID_vld = 1; // clear previous transmission with clr_ID_vld pulse
 repeat(10)
@@ -61,6 +67,11 @@ repeat (10000) begin
 @ (negedge clk);
 end
 
+ 	if (ID != 8'h37 || ID_vld != 0)begin
+	  $display("ERROR: ID should be 0x37 and ID_vld should be 0");
+	  $stop;
+	end
+
 
 // set new values to variables
 station_ID = 8'h0f; // THIS TIME ID IS VALID!!! EXPECT: ID_vld to be high at the end and ID = 8'h0f
@@ -76,6 +87,11 @@ period = 22'd1024; // Period is the samke this time
 repeat (10000) begin
 @ (negedge clk);
 end
+
+	if (ID != 8'h0F || ID_vld == 0)begin
+	  $display("ERROR: ID should be 0x0f and ID_vld should be 1");
+	  $stop;
+	end
 
 // set new values to variables ####### NOW DO NOT CLEAR ID WITH CLR_ID_VLD SIGNAL ################
 
@@ -93,6 +109,12 @@ repeat (10000) begin
 @ (negedge clk);
 end
 
+	if (ID != 8'h0F || ID_vld == 1)begin
+	  $display("ERROR: ID should be 0x0f and ID_vld should be 0");
+	  $stop;
+	end
+
+$display("Passed barcode tb!");
 $stop;
 end
 

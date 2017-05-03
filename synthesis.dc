@@ -48,7 +48,7 @@ set_fix_hold clk
 
 set_flatten true
 ungroup -all
-compile -map_effort medium
+compile_ultra
 
 
 write -format verilog Follower -output follower.vg
